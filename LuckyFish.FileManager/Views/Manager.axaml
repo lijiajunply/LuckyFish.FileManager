@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LuckyFish.FileManager.Views.Manager">
+    <Design.DataContext>
+        <viewModels:ManagerViemModel/>
+    </Design.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" KeyDown="InputElement_OnKeyDown" Text="{Binding FilePath}"></TextBox>
+        <ListBox Grid.Row="1" Items="{Binding Files}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid DoubleTapped="InputElement_OnDoubleTapped" ColumnDefinitions="*,*,*">
+                        <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Extension}"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="{Binding LastWriteTime}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -1,14 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Reactive.Linq;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using DynamicData;
 using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
@@ -28,13 +23,7 @@ public partial class Manager : UserControl
     {
         var listdata = (sender as Grid).DataContext as FileSystemInfo;
         if (listdata is FileInfo)
-        {
-            using Process myProcess = new Process();
-            myProcess.StartInfo.UseShellExecute = false;
-            myProcess.StartInfo.FileName = listdata.FullName;
-            myProcess.StartInfo.CreateNoWindow = true;
-            myProcess.Start();
-        }
+            Process.Start(new ProcessStartInfo(){FileName = listdata.FullName,UseShellExecute = true});
         else
         {
             var dic = listdata as DirectoryInfo;
@@ -51,13 +40,7 @@ public partial class Manager : UserControl
         {
             FileSystemInfo listdata = IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
             if (listdata is FileInfo)
-            {
-                using Process myProcess = new Process();
-                myProcess.StartInfo.UseShellExecute = false;
-                myProcess.StartInfo.FileName = listdata.FullName;
-                myProcess.StartInfo.CreateNoWindow = true;
-                myProcess.Start();
-            }
+                Process.Start(new ProcessStartInfo(){FileName = listdata.FullName,UseShellExecute = true});
             else
             {
                 var dic = listdata as DirectoryInfo;

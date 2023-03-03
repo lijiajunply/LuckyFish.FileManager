@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace LuckyFish.FileManager.ViewModels;
@@ -6,16 +7,13 @@ namespace LuckyFish.FileManager.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     private Dictionary<string, string> _fileRoot = new Dictionary<string, string>();
-    /// <summary>
-    /// key is name ,value is path
-    /// </summary>
     public Dictionary<string, string> FileRoot
     {
         get => _fileRoot;
         set => SetField(ref _fileRoot, value);
     }
 
-    private ManagerViemModel _model = new (@"C:\");
+    private ManagerViemModel _model = new ();
     public ManagerViemModel Model
     {
         get => _model;

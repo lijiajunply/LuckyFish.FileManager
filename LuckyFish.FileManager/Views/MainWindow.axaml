@@ -20,7 +20,9 @@
         <ListBox Grid.Column="0" Items="{Binding FileRoot}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Tapped="RootItemTapped" Text="{Binding Key}"></TextBlock>
+                   <Grid Tapped="RootItemTapped">
+                       <TextBlock Text="{Binding Key}"></TextBlock>
+                   </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

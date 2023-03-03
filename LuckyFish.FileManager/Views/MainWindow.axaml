@@ -20,8 +20,9 @@
         <ListBox Grid.Column="0" Items="{Binding FileRoot}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                   <Grid Tapped="RootItemTapped">
-                       <TextBlock Text="{Binding Key}"></TextBlock>
+                   <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto">
+                       <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/drive.png"></Image>
+                       <TextBlock Grid.Column="1" Text="{Binding Key}"></TextBlock>
                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

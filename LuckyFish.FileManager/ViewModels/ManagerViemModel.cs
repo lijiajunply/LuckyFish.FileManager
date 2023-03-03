@@ -5,6 +5,8 @@ namespace LuckyFish.FileManager.ViewModels;
 
 public class ManagerViemModel : ViewModelBase
 {
+    public DirectoryInfo This { get; set; }
+    public DirectoryInfo Last { get; set; }
     private string _filePath;
     public string FilePath
     {
@@ -15,6 +17,8 @@ public class ManagerViemModel : ViewModelBase
     public ManagerViemModel()
     {
         FilePath = "";
+        Last = new DirectoryInfo(Path.GetPathRoot(GetType().Assembly.Location));
+        This = new DirectoryInfo(Path.GetPathRoot(GetType().Assembly.Location));
         Init();
     }
 
@@ -41,7 +45,9 @@ public class ManagerViemModel : ViewModelBase
 
     public void PathManage(string path)
     {
+        Last = new DirectoryInfo(FilePath == ""?Path.GetPathRoot(GetType().Assembly.Location):FilePath);
         FilePath = path;
+        This = new DirectoryInfo(FilePath);
         Files = new DirectoryInfo(path).GetFileSystemInfos();
     }
 }

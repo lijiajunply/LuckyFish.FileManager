@@ -8,19 +8,36 @@
     <Design.DataContext>
         <viewModels:ManagerViemModel/>
     </Design.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" KeyDown="InputElement_OnKeyDown" Text="{Binding FilePath}"></TextBox>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="LastClick"> Last </Button>
+            <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
+            <TextBox Grid.Column="2"  KeyDown="TextKeyDown" Text="{Binding FilePath}"></TextBox>
+        </Grid>
         <ListBox Grid.Row="1" Items="{Binding Files}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid DoubleTapped="InputElement_OnDoubleTapped" ColumnDefinitions="*,*,*">
-                        <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Extension}"></TextBlock>
-                        <TextBlock Grid.Column="2" Text="{Binding LastWriteTime}"></TextBlock>
+                    <Grid DoubleTapped="GridDoubleTapped" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="15" Grid.Column="0" Initialized="ImageInitialized"></Image>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="{Binding Extension}"></TextBlock>
+                        <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

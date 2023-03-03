@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
@@ -19,21 +21,19 @@ public partial class Manager : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
-    private void InputElement_OnDoubleTapped(object? sender, RoutedEventArgs e)
+    private void GridDoubleTapped(object? sender, RoutedEventArgs e)
     {
         var listdata = (sender as Grid).DataContext as FileSystemInfo;
         if (listdata is FileInfo)
             Process.Start(new ProcessStartInfo(){FileName = listdata.FullName,UseShellExecute = true});
         else
         {
-            var dic = listdata as DirectoryInfo;
             var data = DataContext as ManagerViemModel;
-            data.FilePath = listdata.FullName;
-            data.Files = dic.GetFileSystemInfos();
+            data.PathManage(listdata.FullName);
         }
     }
 
-    private void InputElement_OnKeyDown(object? sender, KeyEventArgs e)
+    private void TextKeyDown(object? sender, KeyEventArgs e)
     {
         var data = DataContext as ManagerViemModel;
         if (e.Key == Key.Enter)
@@ -43,9 +43,7 @@ public partial class Manager : UserControl
                 Process.Start(new ProcessStartInfo(){FileName = listdata.FullName,UseShellExecute = true});
             else
             {
-                var dic = listdata as DirectoryInfo;
-                data.FilePath = listdata.FullName;
-                data.Files = dic.GetFileSystemInfos();
+               data.PathManage(data.FilePath);
             }
         }
     }
@@ -53,5 +51,28 @@ public partial class Manager : UserControl
     {
         FileInfo fi = new FileInfo(filepath);
         return (fi.Attributes & FileAttributes.Directory) != 0;
+    }
+
+    private void ImageInitialized(object? sender, EventArgs e)
+    {
+        var image = sender as Image;
+        var data = image.DataContext as FileSystemInfo;
+        var directory = System.AppContext.BaseDirectory.Split(Path.DirectorySeparatorChar);
+        var slice = new ArraySegment<string>(directory, 0, directory.Length - 4);
+        string fileordir = data is FileInfo ? "file" : "dir";
+        var path = Path.Combine(slice.ToArray()) + $"/Assets/{fileordir}.jpg";
+        image.Source = new Bitmap(path);
+    }
+
+    private void LastClick(object? sender, RoutedEventArgs e)
+    {
+        var data = DataContext as ManagerViemModel;
+        data.PathManage(data.Last.FullName);
+    }
+
+    private void ParentClick(object? sender, RoutedEventArgs e)
+    {
+        var data = DataContext as ManagerViemModel;
+        data.PathManage(data.This.Parent.FullName);
     }
 }

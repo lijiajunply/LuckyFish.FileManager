@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="LuckyFish.FileManager/Views/MainWindow.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
+        <entry key="LuckyFish.FileManager/Views/Manager.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

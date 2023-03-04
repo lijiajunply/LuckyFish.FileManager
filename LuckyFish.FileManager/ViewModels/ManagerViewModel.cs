@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using LuckyFish.FileManager.Serves;
 
 namespace LuckyFish.FileManager.ViewModels;
 
@@ -50,6 +51,11 @@ public class ManagerViewModel : ViewModelBase
         Last = new DirectoryInfo(FilePath == ""?Path.GetPathRoot(GetType().Assembly.Location):FilePath);
         FilePath = path;
         This = new DirectoryInfo(FilePath);
-        Files = new DirectoryInfo(path).GetFileSystemInfos();
+        ReInit();
+    }
+
+    public void ReInit()
+    {
+        Files = new DirectoryInfo(FilePath).GetFileSystemInfos();
     }
 }

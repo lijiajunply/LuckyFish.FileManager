@@ -26,10 +26,11 @@
             <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
             <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}"></TextBox>
         </Grid>
-        <Grid Grid.Row="2" ColumnDefinitions="*,*,*">
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*">
             <TextBlock Grid.Column="0">Name</TextBlock>
             <TextBlock Grid.Column="1">Extension</TextBlock>
             <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
+            <TextBlock Grid.Column="3">Length</TextBlock>
         </Grid>
         <ListBox Grid.Row="3" SelectionChanged="SelectionChanged" Items="{Binding Files}">
             <ListBox.ItemTemplate>
@@ -44,11 +45,12 @@
                         </Grid.ColumnDefinitions>
                         <FlyoutBase.AttachedFlyout>
                             <Flyout>
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
                                     <Button Grid.Row="0" Click="CopyClick">Copy</Button>
                                     <Button Grid.Row="1" Click="CutClick">Cut</Button>
                                     <Button Grid.Row="2" Click="PasteClick">Paste</Button>
                                     <Button Grid.Row="3" Click="RenameClick">Rename</Button>
+                                    <Button Grid.Row="4" Click="DeleteClick">Delete</Button>
                                 </Grid>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>

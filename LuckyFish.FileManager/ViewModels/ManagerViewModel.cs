@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Avalonia.Controls;
-using LuckyFish.FileManager.Views;
 
 namespace LuckyFish.FileManager.ViewModels;
 
 public class ManagerViewModel : ViewModelBase
 {
+    public (string operation,string path) Mark { get; set; }
     public FileSystemInfo Selection { get; set; }
     public DirectoryInfo This { get; set; }
     public DirectoryInfo Last { get; set; }

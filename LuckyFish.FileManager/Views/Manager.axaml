@@ -34,17 +34,21 @@
         <ListBox Grid.Row="3" SelectionChanged="SelectionChanged" Items="{Binding Files}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid PointerPressed="InputElement_OnPointerPressed" DoubleTapped="GridDoubleTapped">
+                    <Grid PointerPressed="RightPressed" DoubleTapped="GridDoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <FlyoutBase.AttachedFlyout>
                             <Flyout>
-                                <Grid RowDefinitions="Auto,Auto,Auto">
-                                    <Button Grid.Row="0">asdf</Button>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                                    <Button Grid.Row="0" Click="CopyClick">Copy</Button>
+                                    <Button Grid.Row="1" Click="CutClick">Cut</Button>
+                                    <Button Grid.Row="2" Click="PasteClick">Paste</Button>
+                                    <Button Grid.Row="3" Click="RenameClick">Rename</Button>
                                 </Grid>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
@@ -52,8 +56,8 @@
                         <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
                         <TextBlock Grid.Column="2" Text="{Binding Extension}"></TextBlock>
                         <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"></TextBlock>
+                        <TextBlock Grid.Column="4" Initialized="LengthInitialized" ></TextBlock>
                     </Grid>
-                    
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

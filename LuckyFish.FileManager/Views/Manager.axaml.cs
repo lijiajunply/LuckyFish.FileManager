@@ -7,8 +7,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
+using LuckyFish.FileManager.Serves;
 using LuckyFish.FileManager.ViewModels;
-using MouseButton = Avalonia.Remote.Protocol.Input.MouseButton;
 
 namespace LuckyFish.FileManager.Views;
 
@@ -42,20 +42,12 @@ public partial class Manager : UserControl
         if (e.Key == Key.Enter)
         {
             FileSystemInfo listdata =
-                IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
+                FileSystemServer.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
             if (listdata is FileInfo)
                 Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
             else
-            {
                 data.PathManage(data.FilePath);
-            }
         }
-    }
-
-    public static bool IsDir(string filepath)
-    {
-        FileInfo fi = new FileInfo(filepath);
-        return (fi.Attributes & FileAttributes.Directory) != 0;
     }
 
     private void ImageInitialized(object? sender, EventArgs e)
@@ -88,11 +80,48 @@ public partial class Manager : UserControl
         data.Selection = list.Selection.SelectedItem as FileSystemInfo;
     }
 
-    private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    private void RightPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.MouseButton == Avalonia.Input.MouseButton.Right)
-        {
+        if (e.MouseButton == MouseButton.Right)
             FlyoutBase.ShowAttachedFlyout(sender as Control);
+    }
+
+    private void LengthInitialized(object? sender, EventArgs e)
+    {
+        var text = sender as TextBlock;
+        var data = text.DataContext as FileSystemInfo;
+        if (data is FileInfo f)
+            text.Text = f.Length.ToString();
+    }
+
+    #region FlyoutOperation
+
+    private void CopyClick(object? sender, RoutedEventArgs e)
+    {
+        var data = (sender as Button).DataContext as FileSystemInfo;
+        var model = DataContext as ManagerViewModel;
+        model.Mark = ("copy",data.FullName);
+        DataContext = model;
+    }
+    private void CutClick(object? sender, RoutedEventArgs e)
+    {
+        var data = (sender as Button).DataContext as FileSystemInfo;
+        var model = DataContext as ManagerViewModel;
+        model.Mark = ("cut",data.FullName);
+        DataContext = model;
+    }
+    private void PasteClick(object? sender, RoutedEventArgs e)
+    {
+        var model = DataContext as ManagerViewModel;
+        if (model.Mark.operation == "copy")
+        {
+            
         }
     }
+    private void RenameClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+    
+    #endregion
 }

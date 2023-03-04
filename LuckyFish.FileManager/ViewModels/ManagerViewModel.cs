@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Avalonia.Controls;
+using LuckyFish.FileManager.Views;
 
 namespace LuckyFish.FileManager.ViewModels;
 
-public class ManagerViemModel : ViewModelBase
+public class ManagerViewModel : ViewModelBase
 {
+    public FileSystemInfo Selection { get; set; }
     public DirectoryInfo This { get; set; }
     public DirectoryInfo Last { get; set; }
     private string _filePath;
@@ -13,8 +16,7 @@ public class ManagerViemModel : ViewModelBase
         get => _filePath;
         set => SetField(ref _filePath, value);
     }
-
-    public ManagerViemModel()
+    public ManagerViewModel()
     {
         FilePath = "";
         Last = new DirectoryInfo(Path.GetPathRoot(GetType().Assembly.Location));
@@ -30,7 +32,7 @@ public class ManagerViemModel : ViewModelBase
         Files = systemInfos.ToArray();
     }
 
-    public ManagerViemModel(string path)
+    public ManagerViewModel(string path)
     {
         FilePath = path;
         Init();
@@ -43,6 +45,7 @@ public class ManagerViemModel : ViewModelBase
         set => SetField(ref _files, value);
     }
 
+    
     public void PathManage(string path)
     {
         Last = new DirectoryInfo(FilePath == ""?Path.GetPathRoot(GetType().Assembly.Location):FilePath);

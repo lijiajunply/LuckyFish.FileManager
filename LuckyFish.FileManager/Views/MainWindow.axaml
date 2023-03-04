@@ -8,7 +8,6 @@
         x:Class="LuckyFish.FileManager.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="LuckyFish.FileManager">
-
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>

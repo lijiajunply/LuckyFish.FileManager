@@ -6,11 +6,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LuckyFish.FileManager.Views.Manager">
     <Design.DataContext>
-        <viewModels:ManagerViemModel/>
+        <viewModels:ManagerViewModel />
     </Design.DataContext>
-    
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -22,23 +24,36 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Click="LastClick"> Last </Button>
             <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
-            <TextBox Grid.Column="2"  KeyDown="TextKeyDown" Text="{Binding FilePath}"></TextBox>
+            <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}"></TextBox>
         </Grid>
-        <ListBox Grid.Row="1" Items="{Binding Files}">
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*">
+            <TextBlock Grid.Column="0">Name</TextBlock>
+            <TextBlock Grid.Column="1">Extension</TextBlock>
+            <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
+        </Grid>
+        <ListBox Grid.Row="3" SelectionChanged="SelectionChanged" Items="{Binding Files}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid DoubleTapped="GridDoubleTapped" >
+                    <Grid PointerPressed="InputElement_OnPointerPressed" DoubleTapped="GridDoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout>
+                                <Grid RowDefinitions="Auto,Auto,Auto">
+                                    <Button Grid.Row="0">asdf</Button>
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
                         <Image Height="15" Grid.Column="0" Initialized="ImageInitialized"></Image>
                         <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
                         <TextBlock Grid.Column="2" Text="{Binding Extension}"></TextBlock>
                         <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"></TextBlock>
                     </Grid>
+                    
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

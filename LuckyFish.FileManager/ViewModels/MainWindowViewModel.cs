@@ -5,15 +5,15 @@ namespace LuckyFish.FileManager.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private Dictionary<string, string> _fileRoot = new Dictionary<string, string>();
+    private Dictionary<string, string> _fileRoot = new ();
     public Dictionary<string, string> FileRoot
     {
         get => _fileRoot;
         set => SetField(ref _fileRoot, value);
     }
 
-    private ManagerViemModel _model = new ();
-    public ManagerViemModel Model
+    private ManagerViewModel _model = new ();
+    public ManagerViewModel Model
     {
         get => _model;
         set => SetField(ref _model, value);

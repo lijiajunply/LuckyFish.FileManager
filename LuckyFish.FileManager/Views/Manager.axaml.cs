@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Avalonia.Controls;
@@ -7,96 +8,97 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
+using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
 
-public partial class Manager : UserControl
+public partial class Manager : Window
 {
     public Manager()
     {
         InitializeComponent();
     }
 
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
+
+    #region Right
 
     private void GridDoubleTapped(object? sender, RoutedEventArgs e)
-    {
-        var context = (sender as Grid).DataContext as FileSystemInfo;
-        if (context is FileInfo)
-            Process.Start(new ProcessStartInfo() { FileName = context.FullName, UseShellExecute = true });
-        else
+        {
+            var context = (sender as Grid).DataContext as FileSystemInfo;
+            if (context is FileInfo)
+                Process.Start(new ProcessStartInfo() { FileName = context.FullName, UseShellExecute = true });
+            else
+            {
+                var data = DataContext as ManagerViewModel;
+                data.PathManage(context.FullName);
+            }
+        }
+    
+        private void TextKeyDown(object? sender, KeyEventArgs e)
         {
             var data = DataContext as ManagerViewModel;
-            data.PathManage(context.FullName);
+            if (e.Key == Key.Enter)
+            {
+                FileSystemInfo listdata =
+                    FileSystemServer.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
+                if (listdata is FileInfo)
+                    Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
+                else
+                    data.PathManage(data.FilePath);
+            }
         }
-    }
-
-    private void TextKeyDown(object? sender, KeyEventArgs e)
-    {
-        var data = DataContext as ManagerViewModel;
-        if (e.Key == Key.Enter)
+    
+        private void ImageInitialized(object? sender, EventArgs e)
         {
-            FileSystemInfo listdata =
-                FileSystemServer.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
-            if (listdata is FileInfo)
-                Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
-            else
-                data.PathManage(data.FilePath);
+            var image = sender as Image;
+            var data = image.DataContext as FileSystemInfo;
+            image.Source = FileSystemServer.IsDir(data.FullName) ? CodeServer.DirImage : CodeServer.FileImage;
         }
-    }
-
-    private void ImageInitialized(object? sender, EventArgs e)
-    {
-        var image = sender as Image;
-        var data = image.DataContext as FileSystemInfo;
-        string s = data is FileInfo ? "file" : "dir";
-        var path = CodeServer.CodePath + $"/Assets/{s}.jpg";
-        image.Source = new Bitmap(path);
-    }
-
-    private void LastClick(object? sender, RoutedEventArgs e)
-    {
-        var data = DataContext as ManagerViewModel;
-        data.PathManage(data.Last.FullName);
-    }
-
-    private void ParentClick(object? sender, RoutedEventArgs e)
-    {
-        var data = DataContext as ManagerViewModel;
-        data.PathManage(data.This.Parent.FullName);
-    }
-
-    private void SelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        var list = sender as ListBox;
-        var data = DataContext as ManagerViewModel;
-        data.Selection = list.Selection.SelectedItem as FileSystemInfo;
-    }
-
-    private void RightPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (e.MouseButton == MouseButton.Right)
-            FlyoutBase.ShowAttachedFlyout(sender as Control);
-    }
-
-    private void LengthInitialized(object? sender, EventArgs e)
-    {
-        var text = sender as TextBlock;
-        var data = text.DataContext as FileSystemInfo;
-        if (data.Name == Path.GetPathRoot(data.FullName))
+    
+        private void LastClick(object? sender, RoutedEventArgs e)
         {
-            text.Text = "";
-            return;
+            var data = DataContext as ManagerViewModel;
+            data.PathManage(data.Last.FullName);
         }
-        long size = FileSystemServer.GetSize(data.FullName);
-        text.Text = size<=-1?"":size.ToString();
-    }
+    
+        private void ParentClick(object? sender, RoutedEventArgs e)
+        {
+            var data = DataContext as ManagerViewModel;
+            data.PathManage(data.This.Parent.FullName);
+        }
+    
+        private void SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListBox;
+            var data = DataContext as ManagerViewModel;
+            data.Selection = list.Selection.SelectedItem as FileSystemInfo;
+        }
+    
+        private void RightPressed(object? sender, PointerPressedEventArgs e)
+        {
+            if (e.MouseButton == MouseButton.Right)
+                FlyoutBase.ShowAttachedFlyout(sender as Control);
+        }
+    
+        private void LengthInitialized(object? sender, EventArgs e)
+        {
+            var text = sender as TextBlock;
+            var data = text.DataContext as FileSystemInfo;
+            if (data.Name == Path.GetPathRoot(data.FullName))
+            {
+                text.Text = "";
+                return;
+            }
+    
+            long size = FileSystemServer.GetSize(data.FullName);
+            text.Text = size <= -1 ? "" : size.ToString();
+        }
 
+    #endregion
+    
     #region FlyoutOperation
 
     private void CopyClick(object? sender, RoutedEventArgs e)
@@ -133,7 +135,7 @@ public partial class Manager : UserControl
         text.KeyDown += RenameFinish;
         p.Children.RemoveAt(1);
         p.Children.Add(text);
-        Grid.SetColumn(text,1);
+        Grid.SetColumn(text, 1);
         //p.Children.Remove(text);
     }
 
@@ -144,21 +146,53 @@ public partial class Manager : UserControl
         (DataContext as ManagerViewModel).ReInit();
     }
 
-    #endregion
-
     private void RenameFinish(object? sender, KeyEventArgs e)
     {
         var text = sender as TextBox;
         var p = text.Parent as Grid;
         if (e.Key == Key.Enter)
         {
-            var data = p.DataContext as FileSystemInfo; 
-            FileSystemServer.Rename(data.FullName,text.Text);
+            var data = p.DataContext as FileSystemInfo;
+            FileSystemServer.Rename(data.FullName, text.Text);
             (DataContext as ManagerViewModel).ReInit();
             p.Children.Remove(text);
             var context = new TextBlock() { Text = text.Text };
             p.Children.Add(context);
-            Grid.SetColumn(context,1);
+            Grid.SetColumn(context, 1);
         }
     }
+
+    private void AddCommonClick(object? sender, RoutedEventArgs e)
+    {
+        var data = (sender as Control).DataContext as FileSystemInfo;
+        CommonModel.CommonToJson(data as DirectoryInfo);
+    }
+
+    #endregion
+    
+    #region Left
+
+    private void RootItemTapped(object? sender, RoutedEventArgs e)
+    {
+        var rootData = (sender as Grid)!.DataContext as KeyValuePair<string, string>?;
+        var data = DataContext as ManagerViewModel;
+        data.PathManage(rootData.Value.Value);
+    }
+
+    private void CommonTapped(object? sender, RoutedEventArgs e)
+    {
+        var data = (sender as Grid).DataContext as DirectoryInfo;
+        (DataContext as ManagerViewModel).PathManage(data.FullName);
+    }
+
+    private void ProgressBarInit(object? sender, EventArgs e)
+    {
+        var progressBar = sender as ProgressBar;
+        var rootData = progressBar.DataContext as KeyValuePair<string, string>?;
+        var drive = new DriveInfo(rootData.Value.Value);
+        progressBar.Maximum = drive.TotalSize;
+        progressBar.Value = drive.AvailableFreeSpace;
+    }
+
+    #endregion
 }

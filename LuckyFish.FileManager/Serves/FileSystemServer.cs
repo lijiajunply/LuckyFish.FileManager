@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Avalonia.OpenGL.Egl;
@@ -17,14 +18,14 @@ public static class FileSystemServer
         if (IsDir(path))
         {
             var dir = new DirectoryInfo(path);
-            Directory.CreateDirectory(newPath + "\\"+dir.Name);
+            Directory.CreateDirectory(newPath + "\\" + dir.Name);
             foreach (var info in dir.GetFileSystemInfos())
-                Copy(info.FullName,newPath + "\\"+dir.Name);
+                Copy(info.FullName, newPath + "\\" + dir.Name);
         }
         else
         {
             var file = new FileInfo(path);
-            File.Copy(path,newPath+"\\"+file.Name);
+            File.Copy(path, newPath + "\\" + file.Name);
         }
     }
 
@@ -36,10 +37,11 @@ public static class FileSystemServer
     public static void Cut(string path, string newPath)
     {
         if (IsDir(path))
-            Directory.Move(path,newPath);
+            Directory.Move(path, newPath);
         else
-            File.Move(path,newPath);
+            File.Move(path, newPath);
     }
+
     /// <summary>
     /// Rename
     /// </summary>
@@ -47,18 +49,14 @@ public static class FileSystemServer
     /// <param name="newName">NewName</param>
     public static void Rename(string path, string newName)
     {
-        if(IsFull(newName))return;
+        var dic = Path.GetDirectoryName(path);
+        if (IsFull(dic + "\\" + newName)) return;
         var file = FromPath(path);
-        var dic = file switch
-        {
-            DirectoryInfo d => d.Parent.FullName,
-            FileInfo f => f.DirectoryName,
-            _ => ""
-        };
         var extension = file is FileInfo ? file.Extension : "";
         var newPath = dic + "\\" + newName + extension;
-        Cut(path,newPath);
+        Cut(path, newPath);
     }
+
     /// <summary>
     /// Delete
     /// </summary>
@@ -66,10 +64,11 @@ public static class FileSystemServer
     public static void Delete(string path)
     {
         if (IsDir(path))
-            Directory.Delete(path,true);
+            Directory.Delete(path, true);
         else
             File.Delete(path);
     }
+
     public static long GetSize(string path)
     {
         try
@@ -80,8 +79,8 @@ public static class FileSystemServer
                 long size = 0;
                 foreach (var info in dir.GetFileSystemInfos())
                 {
-                    if (size >= 50000000)
-                        return 50000000;
+                    if (size >= 500000)
+                        return -1;
                     size += GetSize(info.FullName);
                 }
                 return size;
@@ -97,8 +96,10 @@ public static class FileSystemServer
             return 0;
         }
     }
-    public static bool IsDir(string filepath) => Directory.Exists(filepath);
-    public static bool IsFull(string filePath) => 
+
+    public static bool IsDir(string filepath) => Directory.Exists(filepath) && !File.Exists(filepath);
+
+    public static bool IsFull(string filePath) =>
         Directory.Exists(filePath) || File.Exists(filePath);
 
     public static FileSystemInfo FromPath(string path)
@@ -107,4 +108,14 @@ public static class FileSystemServer
             return new DirectoryInfo(path);
         return new FileInfo(path);
     }
+
+    public static DirectoryInfo[] GetCommonPath()
+        => new DirectoryInfo[]
+        {
+            new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)),
+            new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)),
+            new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)),
+            new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)),
+            new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
+        };
 }

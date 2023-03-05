@@ -16,16 +16,35 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" Items="{Binding FileRoot}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                   <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto">
-                       <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/drive.png"></Image>
-                       <TextBlock Grid.Column="1" Text="{Binding Key}"></TextBlock>
-                   </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0" Items="{Binding Common}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
+                            <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.jpg"></Image>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <SplitView Grid.Row="1"></SplitView>
+            <ListBox Grid.Row="2" Items="{Binding FileRoot}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto">
+                            <Image Grid.Row="0" Grid.RowSpan="2" Height="15" Width="15" Grid.Column="0" Source="../Assets/drive.png"></Image>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Key}"></TextBlock>
+                            <ProgressBar Initialized="ProgressBarInit" Grid.Column="1" Grid.Row="1"></ProgressBar>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
         <views:Manager DataContext="{Binding Model}" Grid.Column="1"></views:Manager>
     </Grid>
 </Window>

@@ -54,10 +54,8 @@ public partial class Manager : UserControl
     {
         var image = sender as Image;
         var data = image.DataContext as FileSystemInfo;
-        var directory = System.AppContext.BaseDirectory.Split(Path.DirectorySeparatorChar);
-        var slice = new ArraySegment<string>(directory, 0, directory.Length - 4);
-        string fileordir = data is FileInfo ? "file" : "dir";
-        var path = Path.Combine(slice.ToArray()) + $"/Assets/{fileordir}.jpg";
+        string s = data is FileInfo ? "file" : "dir";
+        var path = CodeServer.CodePath + $"/Assets/{s}.jpg";
         image.Source = new Bitmap(path);
     }
 
@@ -90,7 +88,13 @@ public partial class Manager : UserControl
     {
         var text = sender as TextBlock;
         var data = text.DataContext as FileSystemInfo;
-        text.Text = FileSystemServer.GetSize(data.FullName).ToString();
+        if (data.Name == Path.GetPathRoot(data.FullName))
+        {
+            text.Text = "";
+            return;
+        }
+        long size = FileSystemServer.GetSize(data.FullName);
+        text.Text = size<=-1?"":size.ToString();
     }
 
     #region FlyoutOperation

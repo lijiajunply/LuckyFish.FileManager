@@ -89,7 +89,7 @@ public class ManagerViewModel : ViewModelBase
     
     public void PathManage(string path)
     {
-        Last = new DirectoryInfo(FilePath == "" ? Path.GetPathRoot(GetType().Assembly.Location) : FilePath);
+        Last = new DirectoryInfo(FilePath == "" ? CodeServer.Root : FilePath);
         FilePath = path;
         This = new DirectoryInfo(FilePath);
         ReInit();

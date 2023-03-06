@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using FileManager.Lib;
 using LuckyFish.FileManager.Serves;
 
 namespace LuckyFish.FileManager.Models;
@@ -27,7 +28,7 @@ public class CommonModel
     {
         CommonModel? model = JsonSerializer.Deserialize<CommonModel>(File.ReadAllText(CodeServer.CodePath+"/Assets/Common.json"));
         List<DirectoryInfo> infos = new List<DirectoryInfo>();
-        FileSystemServer.GetCommonPath().ToList().ForEach(x => infos.Add(x));
+        FileSystemOperation.GetCommonPath().ToList().ForEach(x => infos.Add(x));
         if (model.Commons != null) infos.AddRange(model.Commons);
         return infos;
     }

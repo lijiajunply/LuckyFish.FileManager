@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Avalonia.OpenGL.Egl;
+﻿namespace FileManager.Lib;
 
-namespace LuckyFish.FileManager.Serves;
-
-public static class FileSystemServer
+public static class FileSystemOperation
 {
     /// <summary>
     /// Copy
@@ -118,4 +112,19 @@ public static class FileSystemServer
             new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)),
             new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
         };
+
+    public static FileSystemInfo Create(string directoryPath,string name,bool isFile)
+    {
+        var path = directoryPath + "\\" + name;
+        if (!IsFull(path))
+        {
+            if (isFile)
+                File.Create(path);
+            else
+                Directory.CreateDirectory(path);
+        }
+        else
+            return null;
+        return isFile?new FileInfo(path):new DirectoryInfo(path);
+    }
 }

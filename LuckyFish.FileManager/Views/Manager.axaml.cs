@@ -7,7 +7,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media.Imaging;
+using FileManager.Lib;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 using LuckyFish.FileManager.ViewModels;
@@ -43,7 +43,7 @@ public partial class Manager : Window
             if (e.Key == Key.Enter)
             {
                 FileSystemInfo listdata =
-                    FileSystemServer.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
+                    FileSystemOperation.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
                 if (listdata is FileInfo)
                     Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
                 else
@@ -55,7 +55,7 @@ public partial class Manager : Window
         {
             var image = sender as Image;
             var data = image.DataContext as FileSystemInfo;
-            image.Source = FileSystemServer.IsDir(data.FullName) ? CodeServer.DirImage : CodeServer.FileImage;
+            image.Source = FileSystemOperation.IsDir(data.FullName) ? CodeServer.DirImage : CodeServer.FileImage;
         }
     
         private void LastClick(object? sender, RoutedEventArgs e)
@@ -93,17 +93,17 @@ public partial class Manager : Window
                 return;
             }
     
-            long size = FileSystemServer.GetSize(data.FullName);
+            long size = FileSystemOperation.GetSize(data.FullName);
             text.Text = size <= -1 ? "" : size.ToString();
         }
 
     #endregion
     
-    #region FlyoutOperation
+    #region ItemFlyoutOperation
 
     private void CopyClick(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Button).DataContext as FileSystemInfo;
+        var data = (sender as Control).DataContext as FileSystemInfo;
         var model = DataContext as ManagerViewModel;
         model.Mark = ("copy", data.FullName);
         DataContext = model;
@@ -111,7 +111,7 @@ public partial class Manager : Window
 
     private void CutClick(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Button).DataContext as FileSystemInfo;
+        var data = (sender as Control).DataContext as FileSystemInfo;
         var model = DataContext as ManagerViewModel;
         model.Mark = ("cut", data.FullName);
         DataContext = model;
@@ -121,16 +121,16 @@ public partial class Manager : Window
     {
         var model = DataContext as ManagerViewModel;
         if (model.Mark.operation == "copy")
-            FileSystemServer.Copy(model.Mark.path, model.This.FullName);
+            FileSystemOperation.Copy(model.Mark.path, model.This.FullName);
         else
-            FileSystemServer.Cut(model.Mark.path, model.This.FullName);
+            FileSystemOperation.Cut(model.Mark.path, model.This.FullName);
         if (model.Mark is not (null, null)) model.ReInit();
     }
 
     private void RenameClick(object? sender, RoutedEventArgs e)
     {
-        var p = (sender as Button).Parent.Parent.Parent.Parent as Grid;
-        var data = (sender as Button).DataContext as FileSystemInfo;
+        var p = (sender as Control).Parent.Parent.Parent.Parent as Grid;
+        var data = (sender as Control).DataContext as FileSystemInfo;
         var text = new TextBox() { Text = data.Name };
         text.KeyDown += RenameFinish;
         p.Children.RemoveAt(1);
@@ -141,8 +141,8 @@ public partial class Manager : Window
 
     private void DeleteClick(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Button).DataContext as FileSystemInfo;
-        FileSystemServer.Delete(data.FullName);
+        var data = (sender as Control).DataContext as FileSystemInfo;
+        FileSystemOperation.Delete(data.FullName);
         (DataContext as ManagerViewModel).ReInit();
     }
 
@@ -153,7 +153,7 @@ public partial class Manager : Window
         if (e.Key == Key.Enter)
         {
             var data = p.DataContext as FileSystemInfo;
-            FileSystemServer.Rename(data.FullName, text.Text);
+            FileSystemOperation.Rename(data.FullName, text.Text);
             (DataContext as ManagerViewModel).ReInit();
             p.Children.Remove(text);
             var context = new TextBlock() { Text = text.Text };
@@ -167,6 +167,12 @@ public partial class Manager : Window
         var data = (sender as Control).DataContext as FileSystemInfo;
         CommonModel.CommonToJson(data as DirectoryInfo);
     }
+
+    #endregion
+
+    #region ListFlyoutOperation
+
+    
 
     #endregion
     
@@ -195,4 +201,19 @@ public partial class Manager : Window
     }
 
     #endregion
+
+    private void AddFileTapped(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void AddDirectoryTapped(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void OpenTerminalTapped(object? sender, RoutedEventArgs e)
+    {
+        
+    }
 }

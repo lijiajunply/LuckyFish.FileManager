@@ -26,79 +26,81 @@ public partial class Manager : Window
     #region Right
 
     private void GridDoubleTapped(object? sender, RoutedEventArgs e)
+    {
+        var context = (sender as Grid).DataContext as FileSystemInfo;
+        if (context is FileInfo)
+            Process.Start(new ProcessStartInfo() { FileName = context.FullName, UseShellExecute = true });
+        else
         {
-            var context = (sender as Grid).DataContext as FileSystemInfo;
-            if (context is FileInfo)
-                Process.Start(new ProcessStartInfo() { FileName = context.FullName, UseShellExecute = true });
+            var data = DataContext as ManagerViewModel;
+            data.PathManage(context.FullName);
+        }
+    }
+
+    private void TextKeyDown(object? sender, KeyEventArgs e)
+    {
+        var data = DataContext as ManagerViewModel;
+        if (e.Key == Key.Enter)
+        {
+            FileSystemInfo listdata =
+                FileSystemOperation.IsDir(data.FilePath)
+                    ? new DirectoryInfo(data.FilePath)
+                    : new FileInfo(data.FilePath);
+            if (listdata is FileInfo)
+                Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
             else
-            {
-                var data = DataContext as ManagerViewModel;
-                data.PathManage(context.FullName);
-            }
+                data.PathManage(data.FilePath);
         }
-    
-        private void TextKeyDown(object? sender, KeyEventArgs e)
+    }
+
+    private void ImageInitialized(object? sender, EventArgs e)
+    {
+        var image = sender as Image;
+        var data = image.DataContext as FileSystemInfo;
+        image.Source = FileSystemOperation.IsDir(data.FullName) ? CodeServer.DirImage : CodeServer.FileImage;
+    }
+
+    private void LastClick(object? sender, RoutedEventArgs e)
+    {
+        var data = DataContext as ManagerViewModel;
+        data.PathManage(data.Last.FullName);
+    }
+
+    private void ParentClick(object? sender, RoutedEventArgs e)
+    {
+        var data = DataContext as ManagerViewModel;
+        data.PathManage(data.This.Parent.FullName);
+    }
+
+    private void SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        var list = sender as ListBox;
+        var data = DataContext as ManagerViewModel;
+        data.Selection = list.Selection.SelectedItem as FileSystemInfo;
+    }
+
+    private void RightPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.MouseButton == MouseButton.Right)
+            FlyoutBase.ShowAttachedFlyout(sender as Control);
+    }
+
+    private void LengthInitialized(object? sender, EventArgs e)
+    {
+        var text = sender as TextBlock;
+        var data = text.DataContext as FileSystemInfo;
+        if (data.Name == Path.GetPathRoot(data.FullName))
         {
-            var data = DataContext as ManagerViewModel;
-            if (e.Key == Key.Enter)
-            {
-                FileSystemInfo listdata =
-                    FileSystemOperation.IsDir(data.FilePath) ? new DirectoryInfo(data.FilePath) : new FileInfo(data.FilePath);
-                if (listdata is FileInfo)
-                    Process.Start(new ProcessStartInfo() { FileName = listdata.FullName, UseShellExecute = true });
-                else
-                    data.PathManage(data.FilePath);
-            }
-        }
-    
-        private void ImageInitialized(object? sender, EventArgs e)
-        {
-            var image = sender as Image;
-            var data = image.DataContext as FileSystemInfo;
-            image.Source = FileSystemOperation.IsDir(data.FullName) ? CodeServer.DirImage : CodeServer.FileImage;
-        }
-    
-        private void LastClick(object? sender, RoutedEventArgs e)
-        {
-            var data = DataContext as ManagerViewModel;
-            data.PathManage(data.Last.FullName);
-        }
-    
-        private void ParentClick(object? sender, RoutedEventArgs e)
-        {
-            var data = DataContext as ManagerViewModel;
-            data.PathManage(data.This.Parent.FullName);
-        }
-    
-        private void SelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            var list = sender as ListBox;
-            var data = DataContext as ManagerViewModel;
-            data.Selection = list.Selection.SelectedItem as FileSystemInfo;
-        }
-    
-        private void RightPressed(object? sender, PointerPressedEventArgs e)
-        {
-            if (e.MouseButton == MouseButton.Right)
-                FlyoutBase.ShowAttachedFlyout(sender as Control);
-        }
-    
-        private void LengthInitialized(object? sender, EventArgs e)
-        {
-            var text = sender as TextBlock;
-            var data = text.DataContext as FileSystemInfo;
-            if (data.Name == Path.GetPathRoot(data.FullName))
-            {
-                text.Text = "";
-                return;
-            }
-    
-            long size = FileSystemOperation.GetSize(data.FullName);
-            text.Text = size <= -1 ? "" : size.ToString();
+            text.Text = "";
+            return;
         }
 
+        long size = FileSystemOperation.GetSize(data.FullName);
+        text.Text = size <= -1 ? "" : size.ToString();
+    }
+
     #endregion
-    
+
     #region ItemFlyoutOperation
 
     private void CopyClick(object? sender, RoutedEventArgs e)
@@ -164,18 +166,32 @@ public partial class Manager : Window
 
     private void AddCommonClick(object? sender, RoutedEventArgs e)
     {
+        var model = DataContext as ManagerViewModel;
         var data = (sender as Control).DataContext as FileSystemInfo;
-        CommonModel.CommonToJson(data as DirectoryInfo);
+        model.AddCommon(data.FullName);
     }
 
     #endregion
 
     #region ListFlyoutOperation
 
-    
+    private void AddFileTapped(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void AddDirectoryTapped(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void OpenTerminalTapped(object? sender, RoutedEventArgs e)
+    {
+        Process a = new Process();
+    }
 
     #endregion
-    
+
     #region Left
 
     private void RootItemTapped(object? sender, RoutedEventArgs e)
@@ -200,20 +216,11 @@ public partial class Manager : Window
         progressBar.Value = drive.AvailableFreeSpace;
     }
 
+    private void RemoveCommonTapped(object? sender, RoutedEventArgs e)
+    {
+        var data = (sender as Control).DataContext as DirectoryInfo;
+        (DataContext as ManagerViewModel).RemoveCommon(data.FullName);
+    }
+
     #endregion
-
-    private void AddFileTapped(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-
-    private void AddDirectoryTapped(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-
-    private void OpenTerminalTapped(object? sender, RoutedEventArgs e)
-    {
-        
-    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 
@@ -67,8 +68,9 @@ public class ManagerViewModel : ViewModelBase
 
     private void Init()
     {
+        var dirs = CommonModel.FromJson().Select(s => new DirectoryInfo(s)).ToList();
         //Left
-        Common = CommonModel.FromJson();
+        Common = dirs;
         var drivers = DriveInfo.GetDrives();
         foreach (var driver in drivers)
             FileRoot.Add(driver.Name, driver.RootDirectory.FullName);
@@ -95,5 +97,18 @@ public class ManagerViewModel : ViewModelBase
         ReInit();
     }
 
+    public void RemoveCommon(string path)
+    {
+        var dir = Common.FirstOrDefault(x => x.FullName == path);
+        Common.Remove(dir);
+        CommonModel.Remove(dir.FullName);
+    }
+
+    public void AddCommon(string path)
+    {
+        CommonModel.AddCommon(path);
+        Common.Add(new DirectoryInfo(path));
+    }
+    
     public void ReInit() => Files = new DirectoryInfo(FilePath).GetFileSystemInfos();
 }

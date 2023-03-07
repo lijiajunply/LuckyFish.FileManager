@@ -25,9 +25,16 @@
             <ListBox Grid.Row="0" Items="{Binding Common}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
+                        <Grid PointerPressed="RightPressed" Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
                             <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.jpg"></Image>
                             <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout>
+                                    <Grid>
+                                        <TextBlock Tapped="RemoveCommonTapped">RemoveCommon</TextBlock>
+                                    </Grid>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

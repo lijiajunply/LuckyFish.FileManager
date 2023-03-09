@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="LuckyFish.FileManager/Views/AddItemControl.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/MainWindow.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/Manager.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/TextMessager.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />

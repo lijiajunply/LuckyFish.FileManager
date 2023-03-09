@@ -8,7 +8,6 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FileManager.Lib;
-using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 using LuckyFish.FileManager.ViewModels;
 
@@ -151,12 +150,12 @@ public partial class Manager : Window
     private void RenameFinish(object? sender, KeyEventArgs e)
     {
         var text = sender as TextBox;
-        var p = text.Parent as Grid;
+        var p = text!.Parent as Grid;
         if (e.Key == Key.Enter)
         {
             var data = p.DataContext as FileSystemInfo;
-            FileSystemOperation.Rename(data.FullName, text.Text);
-            (DataContext as ManagerViewModel).ReInit();
+            FileSystemOperation.Rename(data!.FullName, text.Text);
+            (DataContext as ManagerViewModel)!.ReInit();
             p.Children.Remove(text);
             var context = new TextBlock() { Text = text.Text };
             p.Children.Add(context);
@@ -167,27 +166,41 @@ public partial class Manager : Window
     private void AddCommonClick(object? sender, RoutedEventArgs e)
     {
         var model = DataContext as ManagerViewModel;
-        var data = (sender as Control).DataContext as FileSystemInfo;
-        model.AddCommon(data.FullName);
+        var data = (sender as Control)!.DataContext as FileSystemInfo;
+        model.AddCommon(data!.FullName);
     }
 
     #endregion
 
     #region ListFlyoutOperation
 
-    private void AddFileTapped(object? sender, RoutedEventArgs e)
+    private async void AddFileTapped(object? sender, RoutedEventArgs e)
     {
-        
+        var model = new AddItemControlViewModel("Add File");
+        var window = new AddItemControl() { DataContext = model };
+        await window.ShowDialog(this);
+        var name = model.Done();
+        if(name == "")return;
+        var dir = (DataContext as ManagerViewModel)!.This.FullName;
+        FileSystemOperation.Create(dir, name, true);
+        (DataContext as ManagerViewModel)!.ReInit();
     }
 
-    private void AddDirectoryTapped(object? sender, RoutedEventArgs e)
+    private async void AddDirectoryTapped(object? sender, RoutedEventArgs e)
     {
-        
+        var model = new AddItemControlViewModel("Add Directory");
+        var window = new AddItemControl() { DataContext = model };
+        await window.ShowDialog(this);
+        var name = model.Done();
+        if(name == "")return;
+        var dir = (DataContext as ManagerViewModel)!.This.FullName;
+        FileSystemOperation.Create(dir, name, false);
+        (DataContext as ManagerViewModel)!.ReInit();
     }
 
     private void OpenTerminalTapped(object? sender, RoutedEventArgs e)
     {
-        Process a = new Process();
+        
     }
 
     #endregion
@@ -198,28 +211,28 @@ public partial class Manager : Window
     {
         var rootData = (sender as Grid)!.DataContext as KeyValuePair<string, string>?;
         var data = DataContext as ManagerViewModel;
-        data.PathManage(rootData.Value.Value);
+        data.PathManage(rootData!.Value.Value);
     }
 
     private void CommonTapped(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Grid).DataContext as DirectoryInfo;
-        (DataContext as ManagerViewModel).PathManage(data.FullName);
+        var data = (sender as Grid)!.DataContext as DirectoryInfo;
+        (DataContext as ManagerViewModel)!.PathManage(data.FullName);
     }
 
     private void ProgressBarInit(object? sender, EventArgs e)
     {
         var progressBar = sender as ProgressBar;
-        var rootData = progressBar.DataContext as KeyValuePair<string, string>?;
-        var drive = new DriveInfo(rootData.Value.Value);
+        var rootData = progressBar!.DataContext as KeyValuePair<string, string>?;
+        var drive = new DriveInfo(rootData!.Value.Value);
         progressBar.Maximum = drive.TotalSize;
         progressBar.Value = drive.AvailableFreeSpace;
     }
 
     private void RemoveCommonTapped(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Control).DataContext as DirectoryInfo;
-        (DataContext as ManagerViewModel).RemoveCommon(data.FullName);
+        var data = (sender as Control)!.DataContext as DirectoryInfo;
+        (DataContext as ManagerViewModel)!.RemoveCommon(data!.FullName);
     }
 
     #endregion

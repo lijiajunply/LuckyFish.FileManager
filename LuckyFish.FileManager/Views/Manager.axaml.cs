@@ -213,12 +213,7 @@ public partial class Manager : Window
         var data = DataContext as ManagerViewModel;
         data.PathManage(rootData!.Value.Value);
     }
-
-    private void CommonTapped(object? sender, RoutedEventArgs e)
-    {
-        var data = (sender as Grid)!.DataContext as DirectoryInfo;
-        (DataContext as ManagerViewModel)!.PathManage(data.FullName);
-    }
+    
 
     private void ProgressBarInit(object? sender, EventArgs e)
     {
@@ -234,6 +229,13 @@ public partial class Manager : Window
         var data = (sender as Control)!.DataContext as DirectoryInfo;
         (DataContext as ManagerViewModel)!.RemoveCommon(data!.FullName);
     }
-
+    
+    private void CommonChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        var data = (sender as ListBox)!.SelectedItem as DirectoryInfo;
+        (DataContext as ManagerViewModel)!.PathManage(data.FullName);
+    }
+    
     #endregion
+
 }

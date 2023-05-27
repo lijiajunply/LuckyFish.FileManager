@@ -10,28 +10,19 @@
         <viewModels:ManagerViewModel />
     </Design.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+    <Grid ColumnDefinitions="Auto,*">
         <!-- left pass -->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <ListBox Grid.Row="0" Items="{Binding Common}">
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
+            <ListBox SelectionChanged="CommonChanged" Grid.Row="0" Items="{Binding Common}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid PointerPressed="RightPressed" Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
-                            <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.jpg"></Image>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                        <Grid PointerPressed="RightPressed" ColumnDefinitions="Auto,Auto">
+                            <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.png"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout>
                                     <Grid>
-                                        <TextBlock Tapped="RemoveCommonTapped">RemoveCommon</TextBlock>
+                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon"/>
                                     </Grid>
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
@@ -39,38 +30,26 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <SplitView Grid.Row="1"></SplitView>
+            <SplitView Grid.Row="1"/>
             <ListBox Grid.Row="2" Items="{Binding FileRoot}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto">
                             <Image Grid.Row="0" Grid.RowSpan="2" Height="15" Width="15" Grid.Column="0"
-                                   Source="../Assets/drive.png">
-                            </Image>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Key}"></TextBlock>
-                            <ProgressBar Initialized="ProgressBarInit" Grid.Column="1" Grid.Row="1"></ProgressBar>
+                                   Source="../Assets/drive.png"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Key}"/>
+                            <ProgressBar Initialized="ProgressBarInit" Grid.Column="1" Grid.Row="1"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <!-- right pass -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,*">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
                 <Button Grid.Column="0" Click="LastClick"> Last </Button>
                 <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
-                <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}"></TextBox>
+                <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}"/>
             </Grid>
             <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*">
                 <TextBlock Grid.Column="0">Name</TextBlock>
@@ -78,17 +57,12 @@
                 <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
                 <TextBlock Grid.Column="3">Length</TextBlock>
             </Grid>
-            <ListBox PointerPressed="RightPressed" Grid.Row="3" SelectionChanged="SelectionChanged" Items="{Binding Files}">
+            <ListBox PointerPressed="RightPressed" Grid.Row="3" SelectionChanged="SelectionChanged" 
+                     Items="{Binding Files}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid PointerPressed="RightPressed" DoubleTapped="GridDoubleTapped">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                        <Grid PointerPressed="RightPressed" DoubleTapped="GridDoubleTapped"
+                              ColumnDefinitions="Auto,*,*,*,*">
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout>
                                     <Grid RowDefinitions="*,*,*,*,*,*">
@@ -101,11 +75,11 @@
                                     </Grid>
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
-                            <Image Height="15" Grid.Column="0" Initialized="ImageInitialized"></Image>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
-                            <TextBlock Grid.Column="2" Text="{Binding Extension}"></TextBlock>
-                            <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"></TextBlock>
-                            <TextBlock Grid.Column="4" Initialized="LengthInitialized"></TextBlock>
+                            <Image Height="15" Grid.Column="0" Initialized="ImageInitialized"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Extension}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"/>
+                            <TextBlock Grid.Column="4" Initialized="LengthInitialized"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

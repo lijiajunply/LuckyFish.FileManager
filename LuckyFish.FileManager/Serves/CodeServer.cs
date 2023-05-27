@@ -17,8 +17,8 @@ public static class CodeServer
             return Path.Combine(slice.ToArray());
         }
     }
-    public static IImage DirImage => new Bitmap(CodePath + "\\Assets\\dir.jpg");
-    public static IImage FileImage => new Bitmap(CodePath + "\\Assets\\file.jpg");
-    public static IImage DriveImage => new Bitmap(CodePath + "\\Assets\\drive.jpg");
+    public static IImage DirImage => new Bitmap(CodePath + "\\Assets\\dir.png");
+    public static IImage FileImage => new Bitmap(CodePath + "\\Assets\\file.png");
+    public static IImage DriveImage => new Bitmap(CodePath + "\\Assets\\drive.png");
     public static string Root => Path.GetPathRoot(CodePath);
 }

@@ -6,6 +6,7 @@
         <entry key="LuckyFish.FileManager/App.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Styles/ManagerStyle.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/AddItemControl.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
+        <entry key="LuckyFish.FileManager/Views/ColumnFinderView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/MainViem.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/MainView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/MainWindow.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />

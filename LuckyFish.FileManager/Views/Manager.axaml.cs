@@ -176,26 +176,26 @@ public partial class Manager : Window
 
     private async void AddFileTapped(object? sender, RoutedEventArgs e)
     {
-        var model = new AddItemControlViewModel("Add File");
-        var window = new AddItemControl() { DataContext = model };
-        await window.ShowDialog(this);
-        var name = model.Done();
-        if(name == "")return;
-        var dir = (DataContext as ManagerViewModel)!.This.FullName;
-        FileSystemOperation.Create(dir, name, true);
-        (DataContext as ManagerViewModel)!.ReInit();
+        // var model = new AddItemControlViewModel("Add File");
+        // var window = new AddItemControl() { DataContext = model };
+        // await window.ShowDialog(this);
+        // var name = model.Done();
+        // if(name == "")return;
+        // var dir = (DataContext as ManagerViewModel)!.This.FullName;
+        // FileSystemOperation.Create(dir, name, true);
+        // (DataContext as ManagerViewModel)!.ReInit();
     }
 
     private async void AddDirectoryTapped(object? sender, RoutedEventArgs e)
     {
-        var model = new AddItemControlViewModel("Add Directory");
-        var window = new AddItemControl() { DataContext = model };
-        await window.ShowDialog(this);
-        var name = model.Done();
-        if(name == "")return;
-        var dir = (DataContext as ManagerViewModel)!.This.FullName;
-        FileSystemOperation.Create(dir, name, false);
-        (DataContext as ManagerViewModel)!.ReInit();
+        // var model = new AddItemControlViewModel("Add Directory");
+        // var window = new AddItemControl() { DataContext = model };
+        // await window.ShowDialog(this);
+        // var name = model.Done();
+        // if(name == "")return;
+        // var dir = (DataContext as ManagerViewModel)!.This.FullName;
+        // FileSystemOperation.Create(dir, name, false);
+        // (DataContext as ManagerViewModel)!.ReInit();
     }
 
     private void OpenTerminalTapped(object? sender, RoutedEventArgs e)
@@ -230,12 +230,11 @@ public partial class Manager : Window
         (DataContext as ManagerViewModel)!.RemoveCommon(data!.FullName);
     }
     
-    private void CommonChanged(object? sender, SelectionChangedEventArgs e)
+    private void CommonTapped(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as ListBox)!.SelectedItem as DirectoryInfo;
+        var data = (sender as Control)!.DataContext as DirectoryInfo;
         (DataContext as ManagerViewModel)!.PathManage(data.FullName);
     }
-    
     #endregion
 
 }

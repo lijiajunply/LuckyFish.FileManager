@@ -13,16 +13,16 @@
     <Grid ColumnDefinitions="Auto,*">
         <!-- left pass -->
         <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
-            <ListBox SelectionChanged="CommonChanged" Grid.Row="0" Items="{Binding Common}">
+            <ListBox Grid.Row="0" Items="{Binding Common}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid PointerPressed="RightPressed" ColumnDefinitions="Auto,Auto">
-                            <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.png"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                        <Grid PointerPressed="RightPressed" Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
+                            <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout>
                                     <Grid>
-                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon"/>
+                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon" />
                                     </Grid>
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
@@ -30,69 +30,23 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <SplitView Grid.Row="1"/>
+            <SplitView Grid.Row="1" />
             <ListBox Grid.Row="2" Items="{Binding FileRoot}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto">
                             <Image Grid.Row="0" Grid.RowSpan="2" Height="15" Width="15" Grid.Column="0"
-                                   Source="../Assets/drive.png"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Key}"/>
-                            <ProgressBar Initialized="ProgressBarInit" Grid.Column="1" Grid.Row="1"/>
+                                   Source="../Assets/drive.png" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Key}" />
+                            <ProgressBar Initialized="ProgressBarInit" Grid.Column="1" Grid.Row="1" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <!-- right pass -->
-        <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,*">
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
-                <Button Grid.Column="0" Click="LastClick"> Last </Button>
-                <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
-                <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}"/>
-            </Grid>
-            <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*">
-                <TextBlock Grid.Column="0">Name</TextBlock>
-                <TextBlock Grid.Column="1">Extension</TextBlock>
-                <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
-                <TextBlock Grid.Column="3">Length</TextBlock>
-            </Grid>
-            <ListBox PointerPressed="RightPressed" Grid.Row="3" SelectionChanged="SelectionChanged" 
-                     Items="{Binding Files}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid PointerPressed="RightPressed" DoubleTapped="GridDoubleTapped"
-                              ColumnDefinitions="Auto,*,*,*,*">
-                            <FlyoutBase.AttachedFlyout>
-                                <Flyout>
-                                    <Grid RowDefinitions="*,*,*,*,*,*">
-                                        <TextBlock Grid.Row="0" Tapped="CopyClick">Copy</TextBlock>
-                                        <TextBlock Grid.Row="1" Tapped="CutClick">Cut</TextBlock>
-                                        <TextBlock Grid.Row="2" Tapped="PasteClick">Paste</TextBlock>
-                                        <TextBlock Grid.Row="3" Tapped="RenameClick">Rename</TextBlock>
-                                        <TextBlock Grid.Row="4" Tapped="DeleteClick">Delete</TextBlock>
-                                        <TextBlock Grid.Row="5" Tapped="AddCommonClick">Add Common</TextBlock>
-                                    </Grid>
-                                </Flyout>
-                            </FlyoutBase.AttachedFlyout>
-                            <Image Height="15" Grid.Column="0" Initialized="ImageInitialized"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Extension}"/>
-                            <TextBlock Grid.Column="3" Text="{Binding LastWriteTime}"/>
-                            <TextBlock Grid.Column="4" Initialized="LengthInitialized"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <FlyoutBase.AttachedFlyout>
-                    <Flyout>
-                        <Grid RowDefinitions="*,*,*">
-                            <TextBlock Tapped="AddDirectoryTapped" Grid.Row="0">Add Directory</TextBlock>
-                            <TextBlock Tapped="AddFileTapped" Grid.Row="1">Add File</TextBlock>
-                            <TextBlock Tapped="OpenTerminalTapped" Grid.Row="2">Open in the Terminal</TextBlock>
-                        </Grid>
-                    </Flyout>
-                </FlyoutBase.AttachedFlyout>
-            </ListBox>
-        </Grid>
+        <ContentControl Name="FinderControl" Grid.Column="1">
+            
+        </ContentControl>
     </Grid>
 </Window>

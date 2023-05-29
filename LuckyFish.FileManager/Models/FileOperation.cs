@@ -5,9 +5,9 @@ namespace LuckyFish.FileManager.Models;
 
 public class FileOperation : IFileSystem
 {
+    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
-    public string Type { get; set; }
     public string Extension { get; set; }
     public DateTime CreateTime { get; set; }
     public DateTime WriteTime { get; set; }
@@ -18,7 +18,6 @@ public class FileOperation : IFileSystem
         Path = path;
         if (!Exist())
             throw new Exception("IFileSystem Error : Is Not Have The File");
-        Type = "File";
         var info = new FileInfo(path);
         CreateTime = info.CreationTime;
         WriteTime = info.LastWriteTime;
@@ -41,4 +40,5 @@ public class FileOperation : IFileSystem
     public void Copy(string newDirectoryPath) => File.Copy(Path, newDirectoryPath + "\\" + Name);
 
     public bool Exist() => File.Exists(Path);
+    public long GetSize() => Size;
 }

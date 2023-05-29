@@ -6,9 +6,9 @@ namespace LuckyFish.FileManager.Models;
 
 public class DirectoryOperation : IFileSystem
 {
+    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
-    public string Type { get; set; }
     public string Extension { get; set; }
     public DateTime CreateTime { get; set; }
     public DateTime WriteTime { get; set; }
@@ -19,7 +19,6 @@ public class DirectoryOperation : IFileSystem
         Path = path;
         if (!Exist())
             throw new Exception("IFileSystem Error : Is Not Have The Directory");
-        Type = "Directory";
         var info = new DirectoryInfo(Path);
         Name = info.Name;
         Extension = "";
@@ -33,7 +32,7 @@ public class DirectoryOperation : IFileSystem
         var info = new DirectoryInfo(Path).GetFileSystemInfos();
         return info.Select(systemInfo => (IFileSystem)(systemInfo is FileInfo ? new FileOperation(systemInfo.FullName) : new DirectoryOperation(systemInfo.FullName))).ToArray();
     }
-    private long GetSize()
+    public long GetSize()
     {
         try
         {

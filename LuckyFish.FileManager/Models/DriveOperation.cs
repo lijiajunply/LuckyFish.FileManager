@@ -5,9 +5,9 @@ namespace LuckyFish.FileManager.Models;
 
 public class DriveOperation : IFileSystem
 {
+    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
-    public string Type { get; set; }
     public string Extension { get; set; }
     public DateTime CreateTime { get; set; }
     public DateTime WriteTime { get; set; }
@@ -20,9 +20,7 @@ public class DriveOperation : IFileSystem
     {
         Path = path;
         Name = path;
-        Type = "Drive";
-        if (!Exist())
-            throw new Exception("");
+        if (!Exist()) throw new Exception("IFileSystem Error : Is Not Have The Drive");
         var info = new DriveInfo(path);
         DriveFormat = info.DriveFormat;
         Size = info.AvailableFreeSpace;
@@ -39,4 +37,5 @@ public class DriveOperation : IFileSystem
     public void Copy(string newDirectoryPath) {}
 
     public bool Exist() => Directory.Exists(Path);
+    public long GetSize() => Size;
 }

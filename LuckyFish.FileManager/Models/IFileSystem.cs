@@ -4,9 +4,9 @@ namespace LuckyFish.FileManager.Models;
 
 public interface IFileSystem
 {
+    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
-    public string Type { get; set; }
     public string Extension { get; set; }
     public DateTime CreateTime { get; set; }
     public DateTime WriteTime { get; set; }
@@ -16,4 +16,5 @@ public interface IFileSystem
     public void Move(string newDirectoryPath);
     public void Copy(string newDirectoryPath);
     public bool Exist();
+    public long GetSize();
 }

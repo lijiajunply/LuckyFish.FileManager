@@ -16,22 +16,20 @@
             <ListBox Grid.Row="0" Items="{Binding Common}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid PointerPressed="RightPressed" Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
+                        <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
                             <Image Height="15" Width="15" Grid.Column="0" Source="../Assets/dir.png" />
                             <TextBlock Grid.Column="1" Text="{Binding Name}" />
-                            <FlyoutBase.AttachedFlyout>
+                            <Grid.ContextFlyout>
                                 <Flyout>
-                                    <Grid>
-                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon" />
-                                    </Grid>
+                                    <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon" />
                                 </Flyout>
-                            </FlyoutBase.AttachedFlyout>
+                            </Grid.ContextFlyout>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <SplitView Grid.Row="1" />
-            <ListBox Grid.Row="2" Items="{Binding FileRoot}">
+            <ListBox Grid.Row="2" Items="{Binding Root}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Tapped="RootItemTapped" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto">
@@ -45,8 +43,6 @@
             </ListBox>
         </Grid>
         <!-- right pass -->
-        <ContentControl Name="FinderControl" Grid.Column="1">
-            
-        </ContentControl>
+        <ContentControl Name="FinderControl" Grid.Column="1"/>
     </Grid>
 </Window>

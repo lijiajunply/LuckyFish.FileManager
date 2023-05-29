@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using LuckyFish.FileManager.Models;
 
 namespace LuckyFish.FileManager.ViewModels;
@@ -8,38 +6,21 @@ namespace LuckyFish.FileManager.ViewModels;
 public class ManagerViewModel : ViewModelBase
 {
     #region Left
-    public ObservableCollection<DirectoryInfo> Common { get; set; }
-    private Dictionary<string, string> _root = new();
-    public Dictionary<string, string> Root
-    {
-        get => _root;
-        set => SetField(ref _root, value);
-    }
+
+    public ObservableCollection<IFileSystem> Common { get; set; }
+    public ObservableCollection<DriveOperation> Root { get; set; } = new ();
 
     #endregion
     
-
+    private FinderViewBase _finder = new ColumnFinderViewModel();
+    public FinderViewBase Finder
+    {
+        get => _finder;
+        set => SetField(ref _finder, value);
+    }
+    
     public ManagerViewModel()
     {
-       
-    }
-    
-
-    public ManagerViewModel(string path)
-    {
-        
-    }
-    
-    
-
-    public void RemoveCommon(string path)
-    {
-        
-    }
-
-    public void AddCommon(string path)
-    {
-        CommonModel.AddCommon(path);
-        Common.Add(new DirectoryInfo(path));
+        Common = new ObservableCollection<IFileSystem>(FileServer.GetCommonPath());
     }
 }

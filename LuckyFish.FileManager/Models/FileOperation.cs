@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using LuckyFish.FileManager.Serves;
 
 namespace LuckyFish.FileManager.Models;
 
@@ -24,6 +25,7 @@ public class FileOperation : IFileSystem
         Size = info.Length;
         Extension = info.Extension;
         Name = info.Name;
+        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "file.png" });
     }
 
     public void Rename(string newName)

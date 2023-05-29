@@ -99,7 +99,7 @@ public static class FileServer
 
     public static IFileSystem? Create(string directoryPath,string name,bool isFile)
     {
-        var path = directoryPath + "\\" + name;
+        var path = Path.Combine(directoryPath,name);
         if (!IsFull(path))
         {
             if (isFile)
@@ -110,5 +110,15 @@ public static class FileServer
         else
             return null;
         return isFile?new FileOperation(path):new DirectoryOperation(path);
+    }
+
+    public static IFileSystem? Get(string path)
+    {
+        IFileSystem? a = null;
+        if (Directory.Exists(path))
+            a = new DirectoryOperation(path);
+        if (File.Exists(path))
+            a = new FileOperation(path);
+        return a;
     }
 }

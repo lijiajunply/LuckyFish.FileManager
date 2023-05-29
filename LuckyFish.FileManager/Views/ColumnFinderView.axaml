@@ -3,60 +3,128 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
+             xmlns:views="clr-namespace:LuckyFish.FileManager.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:FinderViewBase"
              x:Class="LuckyFish.FileManager.Views.ColumnFinderView">
 
     <Design.DataContext>
-        <viewModels:FinderViewBase/>
+        <viewModels:FinderViewBase />
     </Design.DataContext>
-    
+
     <Grid Name="FileGrid" RowDefinitions="Auto,Auto,Auto,*">
+        
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
-            <Button Grid.Column="0" Click="LastClick"> Last </Button>
-            <Button Grid.Column="1" Click="ParentClick"> Parent </Button>
-            <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath}" />
+            <Button Grid.Column="0" Command="{Binding GoToLastCommand}">
+                Last
+            </Button>
+            <Button Grid.Column="1" Command="{Binding GoToParentCommand}">
+                Parent
+            </Button>
+            <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath,Mode=OneWay}" />
         </Grid>
-        <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*">
+        
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*">
             <TextBlock Grid.Column="0">Name</TextBlock>
             <TextBlock Grid.Column="1">Extension</TextBlock>
             <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
             <TextBlock Grid.Column="3">Length</TextBlock>
         </Grid>
-        <ListBox PointerPressed="RightPressed" Grid.Row="3" SelectionChanged="SelectionChanged"
+        
+        <!-- add view -->
+        <Grid Grid.Row="2" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
+            <Image Height="15" Grid.Column="0" Source="{Binding AddImagePath,
+                                   Converter={StaticResource Converter}}"/>
+            <TextBox Grid.Column="1" Text="{Binding AddName}"/>
+        </Grid>
+        
+        <!-- file view -->
+        <ListBox Grid.Row="3"
+                 SelectedItem="{Binding SelectedItem}"
                  Items="{Binding Files}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid PointerPressed="RightPressed" DoubleTapped="GridDoubleTapped"
+                    <Grid DoubleTapped="GridDoubleTapped"
                           ColumnDefinitions="Auto,*,*,*,*">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                <Grid RowDefinitions="*,*,*,*,*,*">
-                                    <TextBlock Grid.Row="0" Tapped="CopyClick">Copy</TextBlock>
-                                    <TextBlock Grid.Row="1" Tapped="CutClick">Cut</TextBlock>
-                                    <TextBlock Grid.Row="2" Tapped="PasteClick">Paste</TextBlock>
-                                    <TextBlock Grid.Row="3" Tapped="RenameClick">Rename</TextBlock>
-                                    <TextBlock Grid.Row="4" Tapped="DeleteClick">Delete</TextBlock>
-                                    <TextBlock Grid.Row="5" Tapped="AddCommonClick">Add Common</TextBlock>
-                                </Grid>
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
-                        <Image Height="15" Grid.Column="0" Initialized="ImageInitialized" />
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Copy">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Copy" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Cut">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Cut" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Click="RenameClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Rename" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Delete">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Delete" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="AddCommon">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Add Common" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Image Height="15" Grid.Column="0" Source="{Binding ImagePath,
+                                   Converter={StaticResource Converter}}" />
                         <TextBlock Grid.Column="1" Text="{Binding  Name}" />
                         <TextBlock Grid.Column="2" Text="{Binding Extension}" />
                         <TextBlock Grid.Column="3" Text="{Binding WriteTime}" />
-                        <TextBlock Grid.Column="4" Initialized="LengthInitialized" />
+                        <TextBlock Grid.Column="4" Text="{Binding Size}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <FlyoutBase.AttachedFlyout>
-                <Flyout>
-                    <Grid RowDefinitions="*,*,*">
-                        <TextBlock Tapped="AddDirectoryTapped" Grid.Row="0">Add Directory</TextBlock>
-                        <TextBlock Tapped="AddFileTapped" Grid.Row="1">Add File</TextBlock>
-                        <TextBlock Tapped="OpenTerminalTapped" Grid.Row="2">Open in the Terminal</TextBlock>
-                    </Grid>
-                </Flyout>
-            </FlyoutBase.AttachedFlyout>
+
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding FileOperationCommand}" CommandParameter="Paste">
+                        <MenuItem.Header>
+                            <TextBlock Text="Paste" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Click="AddDirectoryClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="Add Directory" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Click="AddFileClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="Add File" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Command="{Binding OpenTerminalCommand}">
+                        <MenuItem.Header>
+                            <TextBlock Text="Open in the Terminal" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
+
 </UserControl>

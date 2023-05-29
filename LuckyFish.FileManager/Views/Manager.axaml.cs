@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
@@ -21,31 +21,23 @@ public partial class Manager : Window
 
     private void RootItemTapped(object? sender, RoutedEventArgs e)
     {
-        var rootData = (sender as Grid)!.DataContext as KeyValuePair<string, string>?;
-        var data = DataContext as ManagerViewModel;
-        //data?.PathManage(rootData!.Value.Value);
+        if (DataContext is ManagerViewModel data && 
+            (sender as Control)!.DataContext is DriveOperation rootData) 
+            data.Finder.FilePath = rootData.Path;
     }
     
 
-    private void ProgressBarInit(object? sender, EventArgs e)
-    {
-        var progressBar = sender as ProgressBar;
-        var rootData = progressBar!.DataContext as KeyValuePair<string, string>?;
-        var drive = new DriveInfo(rootData!.Value.Value);
-        progressBar.Maximum = drive.TotalSize;
-        progressBar.Value = drive.AvailableFreeSpace;
-    }
-
     private void RemoveCommonTapped(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Control)!.DataContext as DirectoryInfo;
-        (DataContext as ManagerViewModel)!.RemoveCommon(data!.FullName);
+        /*var data = (sender as Control)!.DataContext as DirectoryInfo;
+        (DataContext as ManagerViewModel)!.RemoveCommon(data!.FullName);*/
     }
     
     private void CommonTapped(object? sender, RoutedEventArgs e)
     {
-        var data = (sender as Control)!.DataContext as DirectoryInfo;
-        //(DataContext as ManagerViewModel)!.PathManage(data.FullName);
+        if (DataContext is ManagerViewModel data && 
+            (sender as Control)!.DataContext is DirectoryOperation rootData) 
+            data.Finder.FilePath = rootData.Path;
     }
     #endregion
 

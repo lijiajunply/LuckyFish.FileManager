@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using LuckyFish.FileManager.Serves;
 
 namespace LuckyFish.FileManager.Models;
 
@@ -27,6 +28,7 @@ public class DriveOperation : IFileSystem
         TotalSize = info.TotalSize;
         DriveType = info.DriveType.ToString();
         Extension = "";
+        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "drive.png" });
     }
     public void Rename(string newName){}
 

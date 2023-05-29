@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using LuckyFish.FileManager.Serves;
 
 namespace LuckyFish.FileManager.Models;
 
@@ -14,7 +15,7 @@ public class DirectoryOperation : IFileSystem
     public DateTime WriteTime { get; set; }
     public long Size { get; set; }
 
-    public DirectoryOperation(string path)
+    public DirectoryOperation(string path,bool isRunGetSize = false)
     {
         Path = path;
         if (!Exist())
@@ -24,7 +25,8 @@ public class DirectoryOperation : IFileSystem
         Extension = "";
         CreateTime = info.CreationTime;
         WriteTime = info.LastWriteTime;
-        Size = GetSize();
+        Size = isRunGetSize ? GetSize() : 0;
+        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "dir.png" });
     }
 
     public IFileSystem[] GetFileSystems()

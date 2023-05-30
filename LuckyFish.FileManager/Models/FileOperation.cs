@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using LuckyFish.FileManager.Serves;
 
@@ -10,8 +11,8 @@ public class FileOperation : IFileSystem
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
-    public DateTime CreateTime { get; set; }
-    public DateTime WriteTime { get; set; }
+    public string? CreateTime { get; set; }
+    public string? WriteTime { get; set; }
     public long Size { get; set; }
 
     public FileOperation(string path)
@@ -20,8 +21,8 @@ public class FileOperation : IFileSystem
         if (!Exist())
             throw new Exception("IFileSystem Error : Is Not Have The File");
         var info = new FileInfo(path);
-        CreateTime = info.CreationTime;
-        WriteTime = info.LastWriteTime;
+        CreateTime = info.CreationTime.ToString(CultureInfo.CurrentCulture);
+        WriteTime = info.LastWriteTime.ToString(CultureInfo.CurrentCulture);
         Size = info.Length;
         Extension = info.Extension;
         Name = info.Name;

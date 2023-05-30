@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -8,9 +9,9 @@ using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
 
-public partial class ColumnFinderView : UserControl
+public partial class ImageFinderView : UserControl
 {
-    public ColumnFinderView()
+    public ImageFinderView()
     {
         InitializeComponent();
     }
@@ -20,10 +21,10 @@ public partial class ColumnFinderView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
     
-    private void GridDoubleTapped(object? sender, RoutedEventArgs e)
+    private void BorderDoubleTapped(object? sender, RoutedEventArgs e)
     {
         var model = DataContext as FinderViewBase;
-        var context = (sender as Grid)!.DataContext as IFileSystem;
+        var context = (sender as Control)!.DataContext as IFileSystem;
         if(model == null || context == null)return;
         model.Open(context);
     }
@@ -78,7 +79,7 @@ public partial class ColumnFinderView : UserControl
     {
         
     }
-
+    
     #endregion
-
+    
 }

@@ -10,8 +10,8 @@ public class DriveOperation : IFileSystem
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
-    public DateTime CreateTime { get; set; }
-    public DateTime WriteTime { get; set; }
+    public string? CreateTime { get; set; }
+    public string? WriteTime { get; set; }
     public string DriveFormat { get; set; }
     public long Size { get; set; }
     public long TotalSize { get; set; }

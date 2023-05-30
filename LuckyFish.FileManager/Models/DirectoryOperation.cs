@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using LuckyFish.FileManager.Serves;
@@ -11,8 +12,8 @@ public class DirectoryOperation : IFileSystem
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
-    public DateTime CreateTime { get; set; }
-    public DateTime WriteTime { get; set; }
+    public string? CreateTime { get; set; }
+    public string? WriteTime { get; set; }
     public long Size { get; set; }
 
     public DirectoryOperation(string path,bool isRunGetSize = false)
@@ -23,16 +24,22 @@ public class DirectoryOperation : IFileSystem
         var info = new DirectoryInfo(Path);
         Name = info.Name;
         Extension = "";
-        CreateTime = info.CreationTime;
-        WriteTime = info.LastWriteTime;
+        CreateTime = info.CreationTime.ToString(CultureInfo.CurrentCulture);
+        WriteTime = info.LastWriteTime.ToString(CultureInfo.CurrentCulture);
         Size = isRunGetSize ? GetSize() : 0;
         ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "dir.png" });
     }
 
-    public IFileSystem[] GetFileSystems()
+    public IFileSystem[] GetFileSystems(bool isHide = false)
     {
         var info = new DirectoryInfo(Path).GetFileSystemInfos();
-        return info.Select(systemInfo => (IFileSystem)(systemInfo is FileInfo ? new FileOperation(systemInfo.FullName) : new DirectoryOperation(systemInfo.FullName))).ToArray();
+        return info.Where(x => isHide ||
+                               x.Attributes != FileAttributes.Hidden ||
+                               x.Attributes == FileAttributes.System ||
+                               x.Attributes == FileAttributes.Temporary ||
+                               x.Attributes == FileAttributes.Archive).Select(x =>
+                (IFileSystem)(x is FileInfo ? new FileOperation(x.FullName) : new DirectoryOperation(x.FullName)))
+            .ToArray();
     }
     public long GetSize()
     {
@@ -40,7 +47,7 @@ public class DirectoryOperation : IFileSystem
         {
             return GetFileSystems().Sum(info => info.Size);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return 0;
         }

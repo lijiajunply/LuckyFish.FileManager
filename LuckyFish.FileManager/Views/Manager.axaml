@@ -6,72 +6,75 @@
         xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="LuckyFish.FileManager.Views.Manager">
-    
+
     <Design.DataContext>
         <viewModels:ManagerViewModel />
     </Design.DataContext>
 
     <Grid RowDefinitions="Auto,*">
-        
+
         <!-- menu -->
-        <NativeMenuBar Grid.Row="0">
-            
-        </NativeMenuBar>
-        
+        <Menu Grid.Row="0">
+            <MenuItem Header="Setting">
+                
+            </MenuItem>
+        </Menu>
         <!-- main -->
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
-        
-        <!-- left pass (common and drive) -->
-        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
-            <ListBox Grid.Row="0" Items="{Binding Common}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
-                            <Image Height="15" Width="15"
-                                   Grid.Column="0" Source="{Binding ImagePath,
+
+            <!-- left pass (common and drive) -->
+            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
+                <ListBox Grid.Row="0" Items="{Binding Common}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
+                                <Image Height="15" Width="15"
+                                       Grid.Column="0"
+                                       Source="{Binding ImagePath,
                                    Converter={StaticResource Converter}}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
-                            <Grid.ContextFlyout>
-                                <Flyout>
-                                    <TextBlock Tapped="RemoveCommonTapped" 
-                                               Text="RemoveCommon" />
-                                </Flyout>
-                            </Grid.ContextFlyout>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            
-            <SplitView Grid.Row="1" />
-            
-            <ListBox Grid.Row="2" Items="{Binding Root}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Tapped="RootItemTapped" 
-                              ColumnDefinitions="Auto,Auto" 
-                              RowDefinitions="Auto,Auto">
-                            <Image Grid.Row="0" 
-                                   Grid.RowSpan="2" 
-                                   Height="15" Width="15" 
-                                   Grid.Column="0"
-                                   Source="{Binding ImagePath}" />
-                            <TextBlock Grid.Row="0" 
-                                       Grid.Column="1" 
-                                       Text="{Binding Name}" />
-                            <ProgressBar Grid.Column="1" Grid.Row="1" 
-                                         Value="{Binding Size}" 
-                                         Maximum="{Binding TotalSize}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                <Grid.ContextFlyout>
+                                    <Flyout>
+                                        <TextBlock Tapped="RemoveCommonTapped"
+                                                   Text="RemoveCommon" />
+                                    </Flyout>
+                                </Grid.ContextFlyout>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <SplitView Grid.Row="1" />
+
+                <ListBox Grid.Row="2" Items="{Binding Root}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Tapped="RootItemTapped"
+                                  ColumnDefinitions="Auto,Auto"
+                                  RowDefinitions="Auto,Auto">
+                                <Image Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Height="15" Width="15"
+                                       Grid.Column="0"
+                                       Source="{Binding ImagePath,
+                                   Converter={StaticResource Converter}}" />
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding Name}" />
+                                <ProgressBar Grid.Column="1" Grid.Row="1"
+                                             Value="{Binding Size}"
+                                             Maximum="{Binding TotalSize}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- right pass (finder) -->
+            <ContentControl Grid.Column="1"
+                            Name="FinderControl"
+                            Content="{Binding Finder}" />
         </Grid>
-        
-        <!-- right pass (finder) -->
-        <ContentControl Grid.Column="1" 
-                        Name="FinderControl" 
-                        Content="{Binding Finder}"/>
     </Grid>
-    </Grid>
-    
+
 </Window>

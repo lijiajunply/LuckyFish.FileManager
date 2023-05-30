@@ -24,9 +24,7 @@
 
         <!-- add view -->
         <Grid Grid.Row="1" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
-            <Image Height="15" Grid.Column="0"
-                   Source="{Binding AddImagePath,
-                                   Converter={StaticResource Converter}}" />
+            <Svg Height="15" Grid.Column="0" Path="{Binding AddImagePath}"/>
             <TextBox Grid.Column="1" Text="{Binding AddName}" />
         </Grid>
 
@@ -82,8 +80,7 @@
                         </StackPanel.ContextMenu>
                         <Border CornerRadius="10" ClipToBounds="True">
                             <Panel>
-                                <Image Width="100" Stretch="Uniform" Source="{Binding ImagePath,
-                                 Converter={StaticResource Converter}}" />
+                                <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}"/>
                             </Panel>
                         </Border>
                         <TextBlock Text="{Binding Name}" 

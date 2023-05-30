@@ -26,7 +26,7 @@ public class FileOperation : IFileSystem
         Size = info.Length;
         Extension = info.Extension;
         Name = info.Name;
-        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "file.png" });
+        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "file.svg");
     }
 
     public void Rename(string newName)

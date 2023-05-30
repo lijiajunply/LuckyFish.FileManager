@@ -13,7 +13,7 @@
     </Design.DataContext>
 
     <Grid Name="FileGrid" RowDefinitions="Auto,Auto,Auto,*">
-        
+
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
             <Button Grid.Column="0" Command="{Binding GoToLastCommand}">
                 Last
@@ -23,21 +23,22 @@
             </Button>
             <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath,Mode=OneWay}" />
         </Grid>
-        
+
         <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*">
             <TextBlock Grid.Column="0">Name</TextBlock>
             <TextBlock Grid.Column="1">Extension</TextBlock>
             <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
             <TextBlock Grid.Column="3">Length</TextBlock>
         </Grid>
-        
+
         <!-- add view -->
         <Grid Grid.Row="2" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
-            <Image Height="15" Grid.Column="0" Source="{Binding AddImagePath,
-                                   Converter={StaticResource Converter}}"/>
-            <TextBox Grid.Column="1" Text="{Binding AddName}"/>
+            <Image Height="15" Grid.Column="0"
+                   Source="{Binding AddImagePath,
+                                   Converter={StaticResource Converter}}" />
+            <TextBox Grid.Column="1" Text="{Binding AddName}" />
         </Grid>
-        
+
         <!-- file view -->
         <ListBox Grid.Row="3"
                  SelectedItem="{Binding SelectedItem}"
@@ -50,10 +51,10 @@
                             <ContextMenu>
                                 <MenuItem Command="{Binding $parent[views:Manager].More}" CommandParameter="{Binding }">
                                     <MenuItem.Header>
-                                        <TextBlock Text="More.."/>
+                                        <TextBlock Text="More.." />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <Separator/>
+                                <Separator />
                                 <MenuItem
                                     Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
                                     CommandParameter="Copy">
@@ -68,7 +69,7 @@
                                         <TextBlock Text="Cut" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <Separator/>
+                                <Separator />
                                 <MenuItem Click="RenameClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="Rename" />
@@ -90,8 +91,7 @@
                                 </MenuItem>
                             </ContextMenu>
                         </Grid.ContextMenu>
-                        <Image Height="15" Grid.Column="0" Source="{Binding ImagePath,
-                                   Converter={StaticResource Converter}}" />
+                        <Svg Height="15" Grid.Column="0" Path="{Binding ImagePath}" />
                         <TextBlock Grid.Column="1" Text="{Binding  Name}" />
                         <TextBlock Grid.Column="2" Text="{Binding Extension}" />
                         <TextBlock Grid.Column="3" Text="{Binding WriteTime}" />
@@ -107,7 +107,7 @@
                             <TextBlock Text="Paste" />
                         </MenuItem.Header>
                     </MenuItem>
-                    <Separator/>
+                    <Separator />
                     <MenuItem Click="AddDirectoryClick">
                         <MenuItem.Header>
                             <TextBlock Text="Add Directory" />

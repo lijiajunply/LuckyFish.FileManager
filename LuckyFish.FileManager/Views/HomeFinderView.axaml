@@ -2,6 +2,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
+             xmlns:views="clr-namespace:LuckyFish.FileManager.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LuckyFish.FileManager.Views.HomeFinderView">
+    <Design.DataContext>
+        <viewModels:HomeFinderViewModel/>
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto,Auto">
+        <ListBox Grid.Row="0" Items="{Binding Commons}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}" 
+                            CommandParameter="{Binding Path}">
+                        <Border>
+                           <Panel>
+                               <Svg Height="50" Path="{Binding ImagePath}"/>
+                               <TextBlock Text="{Binding Name}"/>
+                           </Panel>
+                        </Border>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="1" Items="{Binding Drives}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button  Command="{Binding $parent[views:Manager].DataContext.FilePath}" 
+                             CommandParameter="{Binding Name}">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                            <Svg Height="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" 
+                                 Path="{Binding ImagePath}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+                            <ProgressBar Grid.Row="1" Grid.Column="1" Value="{Binding Size}" 
+                                         Maximum="{Binding TotalSize}"/>
+                            <TextBlock Initialized="SizeBoxInit" Grid.Row="2" Grid.Column="1"/>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </UserControl>

@@ -16,6 +16,6 @@ public class DriveSimpleOperation
         var info = new DriveInfo(name);
         Size = info.AvailableFreeSpace;
         TotalSize = info.TotalSize;
-        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "drive.png" });
+        ImagePath = Path.Combine(CodeServer.CodePath, "Assets", "drive.svg" );
     }
 }

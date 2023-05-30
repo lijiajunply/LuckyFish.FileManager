@@ -175,9 +175,4 @@ public class ImageFinderViewModel : FinderViewBase
     
 }
 
-public class HomeFinderViewModel : FinderViewBase
-{
-    
-}
-
 #endregion

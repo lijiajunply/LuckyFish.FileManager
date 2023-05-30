@@ -15,9 +15,7 @@
     <StackPanel>
         <Grid ColumnDefinitions="*,*">
             <Border Grid.Column="0" CornerRadius="10" ClipToBounds="True">
-                <Image Width="80" Stretch="Uniform"
-                       Source="{Binding ImagePath,
-                       Converter={StaticResource Converter}}" />
+                <Svg Width="80" Stretch="Uniform" Path="{Binding ImagePath}"/>
             </Border>
             <Grid Grid.Column="1" RowDefinitions="*,*">
                 <TextBox HorizontalAlignment="Center" Grid.Row="0" Text="{Binding Name,Mode=OneTime}"/>

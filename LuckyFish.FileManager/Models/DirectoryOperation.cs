@@ -27,7 +27,7 @@ public class DirectoryOperation : IFileSystem
         CreateTime = info.CreationTime.ToString(CultureInfo.CurrentCulture);
         WriteTime = info.LastWriteTime.ToString(CultureInfo.CurrentCulture);
         Size = isRunGetSize ? GetSize() : 0;
-        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "dir.png" });
+        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "dir.svg");
     }
 
     public IFileSystem[] GetFileSystems(bool isHide = false)

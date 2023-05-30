@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace LuckyFish.FileManager.Models;
 
@@ -121,4 +123,7 @@ public static class FileServer
             a = new FileOperation(path);
         return a;
     }
+
+    public static List<DriveSimpleOperation> GetDrives()
+        => DriveInfo.GetDrives().Select(x => new DriveSimpleOperation(x.Name)).ToList();
 }

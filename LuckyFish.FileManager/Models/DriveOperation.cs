@@ -28,7 +28,7 @@ public class DriveOperation : IFileSystem
         TotalSize = info.TotalSize;
         DriveType = info.DriveType.ToString();
         Extension = "";
-        ImagePath = System.IO.Path.Combine(new[] { CodeServer.CodePath, "Assets", "drive.png" });
+        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "drive.svg");
     }
     public void Rename(string newName){}
 

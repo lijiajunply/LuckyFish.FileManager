@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuckyFish.FileManager", "LuckyFish.FileManager\LuckyFish.FileManager.csproj", "{0EE242F3-4E86-482F-9AED-BC827C73062C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{85FDB165-A203-4725-9B09-C2A959C66440}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager.Lib", "FileManager.Lib\FileManager.Lib.csproj", "{60D3DBB4-3CEA-4D13-8CF0-907B9806DB7B}"
 EndProject
 Global
@@ -16,10 +14,6 @@ Global
 		{0EE242F3-4E86-482F-9AED-BC827C73062C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE242F3-4E86-482F-9AED-BC827C73062C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE242F3-4E86-482F-9AED-BC827C73062C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85FDB165-A203-4725-9B09-C2A959C66440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85FDB165-A203-4725-9B09-C2A959C66440}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85FDB165-A203-4725-9B09-C2A959C66440}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85FDB165-A203-4725-9B09-C2A959C66440}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60D3DBB4-3CEA-4D13-8CF0-907B9806DB7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60D3DBB4-3CEA-4D13-8CF0-907B9806DB7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60D3DBB4-3CEA-4D13-8CF0-907B9806DB7B}.Release|Any CPU.ActiveCfg = Release|Any CPU

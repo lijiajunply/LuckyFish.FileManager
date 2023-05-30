@@ -8,7 +8,7 @@ namespace LuckyFish.FileManager;
 
 public class BitmapValueConverter : IValueConverter
 {
-    public static BitmapValueConverter Instance = new BitmapValueConverter();
+    public static BitmapValueConverter Instance = new ();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

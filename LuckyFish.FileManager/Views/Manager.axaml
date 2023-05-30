@@ -15,9 +15,8 @@
 
         <!-- menu -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Setting">
-                
-            </MenuItem>
+            <MenuItem Header="Setting"/>
+            <MenuItem Header="Home" Command="{Binding ToHome}"/>
         </Menu>
         <!-- main -->
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
@@ -28,15 +27,13 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
-                                <Image Height="15" Width="15"
-                                       Grid.Column="0"
-                                       Source="{Binding ImagePath,
-                                   Converter={StaticResource Converter}}" />
+                                <Svg Height="15" Width="15"
+                                     Grid.Column="0"
+                                     Path="{Binding ImagePath}"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Name}" />
                                 <Grid.ContextFlyout>
                                     <Flyout>
-                                        <TextBlock Tapped="RemoveCommonTapped"
-                                                   Text="RemoveCommon" />
+                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon" />
                                     </Flyout>
                                 </Grid.ContextFlyout>
                             </Grid>
@@ -52,12 +49,11 @@
                             <Grid Tapped="RootItemTapped"
                                   ColumnDefinitions="Auto,Auto"
                                   RowDefinitions="Auto,Auto">
-                                <Image Grid.Row="0"
-                                       Grid.RowSpan="2"
-                                       Height="15" Width="15"
-                                       Grid.Column="0"
-                                       Source="{Binding ImagePath,
-                                   Converter={StaticResource Converter}}" />
+                                <Svg Grid.Row="0"
+                                     Grid.RowSpan="2"
+                                     Height="15" Width="15"
+                                     Grid.Column="0"
+                                     Path="{Binding ImagePath}"/>
                                 <TextBlock Grid.Row="0"
                                            Grid.Column="1"
                                            Text="{Binding Name}" />

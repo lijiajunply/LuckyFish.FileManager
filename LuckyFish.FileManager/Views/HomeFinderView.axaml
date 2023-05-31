@@ -7,50 +7,62 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LuckyFish.FileManager.Views.HomeFinderView">
     <Design.DataContext>
-        <viewModels:HomeFinderViewModel/>
+        <viewModels:HomeFinderViewModel />
     </Design.DataContext>
+
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Styles>
+
     <Grid RowDefinitions="Auto,Auto">
-        <ListBox Grid.Row="0" Items="{Binding Commons}">
-            <ListBox.ItemsPanel>
+
+        <ItemsControl Grid.Row="0" Items="{Binding Commons}">
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel/>
+                    <WrapPanel />
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}" 
+                    <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}"
                             CommandParameter="{Binding Path}">
-                        <Border>
-                           <Panel>
-                               <Svg Height="50" Path="{Binding ImagePath}"/>
-                               <TextBlock Text="{Binding Name}"/>
-                           </Panel>
+                        <Border CornerRadius="10" ClipToBounds="True">
+                            <StackPanel Spacing="5" Width="100">
+                                <Svg Height="50" Path="{Binding ImagePath}" />
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" />
+                            </StackPanel>
                         </Border>
                     </Button>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ListBox Grid.Row="1" Items="{Binding Drives}">
-            <ListBox.ItemsPanel>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <ItemsControl Grid.Row="1" Items="{Binding Drives}">
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel/>
+                    <WrapPanel />
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button  Command="{Binding $parent[views:Manager].DataContext.FilePath}" 
-                             CommandParameter="{Binding Name}">
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
-                            <Svg Height="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" 
-                                 Path="{Binding ImagePath}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
-                            <ProgressBar Grid.Row="1" Grid.Column="1" Value="{Binding Size}" 
-                                         Maximum="{Binding TotalSize}"/>
-                            <TextBlock Initialized="SizeBoxInit" Grid.Row="2" Grid.Column="1"/>
-                        </Grid>
-                    </Button>
+                    <Border CornerRadius="10" ClipToBounds="True">
+                        <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}"
+                                CommandParameter="{Binding Name}">
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                                <Svg Height="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
+                                     Path="{Binding ImagePath}" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+                                <ProgressBar Grid.Row="1" Grid.Column="1" Value="{Binding Size}"
+                                             Maximum="{Binding TotalSize}" />
+                                <TextBlock Initialized="SizeBoxInit" Grid.Row="2" Grid.Column="1" />
+                            </Grid>
+                        </Button>
+                    </Border>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

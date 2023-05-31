@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using DynamicData;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 
@@ -11,7 +11,7 @@ public class ManagerViewModel : ViewModelBase
     #region Left
 
     private SettingModel? Model { get; set; }
-    public ObservableCollection<IFileSystem> Common { get; set; }
+    public ObservableCollection<CommonModel> Common { get; set; }
     public ObservableCollection<DriveSimpleOperation> Root { get; set; }
 
     #endregion
@@ -41,15 +41,19 @@ public class ManagerViewModel : ViewModelBase
     public void ToHome()
     {
         var a = FileServer.GetDrives();
-        var b = FileServer.GetCommonPath().Select(x => new CommonModel(x.Path)).ToList();
+        var b = FileServer.GetCommonPath();
+        Common.Clear();
+        Common.Add(b);
+        Root.Clear();
+        Root.Add(a);
         Finder = new HomeFinderViewModel(a,b);
     }
     
     public ManagerViewModel()
     {
         Model = SettingServer.Read();
-        Common = new ObservableCollection<IFileSystem>(FileServer.GetCommonPath());
-        Root = new ObservableCollection<DriveSimpleOperation>(FileServer.GetDrives());
+        Common = new ObservableCollection<CommonModel>();
+        Root = new ObservableCollection<DriveSimpleOperation>();
         ToHome();
     }
 }

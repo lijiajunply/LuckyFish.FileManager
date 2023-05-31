@@ -10,6 +10,15 @@
         <views:FinderViewBase />
     </Design.DataContext>
 
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid Name="FileGrid" RowDefinitions="Auto,Auto,*">
 
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
@@ -24,7 +33,7 @@
 
         <!-- add view -->
         <Grid Grid.Row="1" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
-            <Svg Height="15" Grid.Column="0" Path="{Binding AddImagePath}"/>
+            <Svg Height="15" Grid.Column="0" Path="{Binding AddImagePath}" />
             <TextBox Grid.Column="1" Text="{Binding AddName}" />
         </Grid>
 
@@ -34,14 +43,21 @@
                  Items="{Binding Files}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel/>
+                    <WrapPanel />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Spacing="5" Width="100" DoubleTapped="BorderDoubleTapped">
-                        <StackPanel.ContextMenu>
+                    <Border Width="100" DoubleTapped="BorderDoubleTapped">
+                        <Border.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Command="{Binding $parent[view:Manager].More}" CommandParameter="{Binding }">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="More.." />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator />
                                 <MenuItem
                                     Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
                                     CommandParameter="Copy">
@@ -77,15 +93,16 @@
                                     </MenuItem.Header>
                                 </MenuItem>
                             </ContextMenu>
-                        </StackPanel.ContextMenu>
-                        <Border CornerRadius="10" ClipToBounds="True">
-                            <Panel>
-                                <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}"/>
-                            </Panel>
-                        </Border>
-                        <TextBlock Text="{Binding Name}" 
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
+                        </Border.ContextMenu>
+                        <StackPanel>
+                            <Border CornerRadius="10" ClipToBounds="True" >
+                                <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}" />
+                            </Border>
+                            <TextBlock Text="{Binding Name}"
+                                       HorizontalAlignment="Center"
+                                       TextWrapping="WrapWithOverflow"/>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 

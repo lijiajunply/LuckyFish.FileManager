@@ -34,13 +34,13 @@ public partial class Manager : Window
     private void CommonTapped(object? sender, RoutedEventArgs e)
     {
         if (DataContext is ManagerViewModel data &&
-            (sender as Control)!.DataContext is DirectoryOperation directory)
-            data.FilePath(directory.Path);
+            (sender as Control)!.DataContext is CommonModel commonModel)
+            data.FilePath(commonModel.Path);
     }
 
     #endregion
 
-    public void More(IFileSystem system)
+    public static void More(IFileSystem system)
     {
         var a = new DetailView
         {

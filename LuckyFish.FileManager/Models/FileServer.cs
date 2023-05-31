@@ -89,8 +89,8 @@ public static class FileServer
         return new FileOperation(path);
     }
 
-    public static DirectoryOperation[] GetCommonPath()
-        => new DirectoryOperation[]
+    public static CommonModel[] GetCommonPath()
+        => new CommonModel[]
         {
             new (Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)),
             new (Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)),
@@ -124,6 +124,6 @@ public static class FileServer
         return a;
     }
 
-    public static List<DriveSimpleOperation> GetDrives()
-        => DriveInfo.GetDrives().Select(x => new DriveSimpleOperation(x.Name)).ToList();
+    public static DriveSimpleOperation[] GetDrives()
+        => DriveInfo.GetDrives().Select(x => new DriveSimpleOperation(x.Name)).ToArray();
 }

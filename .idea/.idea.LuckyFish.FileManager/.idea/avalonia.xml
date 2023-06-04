@@ -5,6 +5,7 @@
       <map>
         <entry key="LuckyFish.FileManager/App.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Styles/ManagerStyle.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
+        <entry key="LuckyFish.FileManager/Views/AddFileSystemView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/AddItemControl.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/ColumnFinderView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/DetailView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
@@ -14,6 +15,7 @@
         <entry key="LuckyFish.FileManager/Views/MainView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/MainWindow.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/Manager.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
+        <entry key="LuckyFish.FileManager/Views/MessageBox.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/SettingView.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
         <entry key="LuckyFish.FileManager/Views/TextMessager.axaml" value="LuckyFish.FileManager/LuckyFish.FileManager.csproj" />
       </map>

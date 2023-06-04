@@ -48,4 +48,28 @@ public partial class Manager : Window
         };
         a.Show();
     }
+
+    public async void AddFile(string path)
+    {
+        if(DataContext is not ManagerViewModel model)return;
+        var a = new AddFileSystemView(path,true);
+        var r = await a.ShowDialog<bool>(this);
+        if(!r)return;
+        model.ReInit();
+    }
+    
+    public async void AddFolder(string path)
+    {
+        if(DataContext is not ManagerViewModel model)return;
+        var a = new AddFileSystemView(path,false);
+        var r = await a.ShowDialog<bool>(this);
+        if(!r)return;
+        model.ReInit();
+    }
+
+    private void SettingClick(object? sender, RoutedEventArgs e)
+    {
+        var a = new SettingView();
+        a.ShowDialog(this);
+    }
 }

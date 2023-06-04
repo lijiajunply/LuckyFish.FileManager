@@ -19,7 +19,7 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid Name="FileGrid" RowDefinitions="Auto,Auto,*">
+    <Grid Name="FileGrid" RowDefinitions="Auto,*">
 
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
             <Button Grid.Column="0" Command="{Binding GoToLastCommand}">
@@ -30,15 +30,9 @@
             </Button>
             <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath,Mode=OneWay}" />
         </Grid>
-
-        <!-- add view -->
-        <Grid Grid.Row="1" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
-            <Svg Height="15" Grid.Column="0" Path="{Binding AddImagePath}" />
-            <TextBox Grid.Column="1" Text="{Binding AddName}" />
-        </Grid>
-
+        
         <!-- file view -->
-        <ListBox Grid.Row="2"
+        <ListBox Grid.Row="1"
                  SelectedItem="{Binding SelectedItem}"
                  Items="{Binding Files}">
             <ListBox.ItemsPanel>
@@ -46,13 +40,20 @@
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Width="100" DoubleTapped="BorderDoubleTapped">
-                        <Border.ContextMenu>
+                    <StackPanel Width="100" DoubleTapped="BorderDoubleTapped">
+                        <Border CornerRadius="10" ClipToBounds="True">
+                            <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}" />
+                        </Border>
+                        <TextBlock Text="{Binding Name}"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="WrapWithOverflow" />
+                        <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="{Binding $parent[view:Manager].More}" CommandParameter="{Binding }">
+                                <MenuItem Command="{Binding $parent[view:Manager].More}"
+                                          CommandParameter="{Binding }">
                                     <MenuItem.Header>
                                         <TextBlock Text="More.." />
                                     </MenuItem.Header>
@@ -93,16 +94,8 @@
                                     </MenuItem.Header>
                                 </MenuItem>
                             </ContextMenu>
-                        </Border.ContextMenu>
-                        <StackPanel>
-                            <Border CornerRadius="10" ClipToBounds="True" >
-                                <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}" />
-                            </Border>
-                            <TextBlock Text="{Binding Name}"
-                                       HorizontalAlignment="Center"
-                                       TextWrapping="WrapWithOverflow"/>
-                        </StackPanel>
-                    </Border>
+                        </StackPanel.ContextMenu>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -114,12 +107,14 @@
                         </MenuItem.Header>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Click="AddDirectoryClick">
+                    <MenuItem Command="{Binding $parent[view:Manager].AddFolder}" 
+                              CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add Directory" />
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Click="AddFileClick">
+                    <MenuItem Command="{Binding $parent[view:Manager].AddFile}" 
+                              CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add File" />
                         </MenuItem.Header>

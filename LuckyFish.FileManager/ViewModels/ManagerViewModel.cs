@@ -38,6 +38,12 @@ public class ManagerViewModel : ViewModelBase
         }
     }
 
+    public void ReInit()
+    {
+        if (_finder is FinderViewBase model)
+            model.Init();
+    }
+    
     public void ToHome()
     {
         var a = FileServer.GetDrives();

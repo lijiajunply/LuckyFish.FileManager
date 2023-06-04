@@ -15,7 +15,7 @@
 
         <!-- menu -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Setting"/>
+            <MenuItem Header="Setting" Click="SettingClick"/>
             <MenuItem Header="Home" Command="{Binding ToHome}"/>
         </Menu>
         <!-- main -->

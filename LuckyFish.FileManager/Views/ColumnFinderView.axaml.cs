@@ -63,6 +63,8 @@ public partial class ColumnFinderView : UserControl
         var context = new TextBlock() { Text = text.Text };
         p.Children.Add(context);
         Grid.SetColumn(context, 1);
+        var model = DataContext as FinderViewBase;
+        model?.Init();
     }
 
     #endregion

@@ -12,7 +12,7 @@
         <viewModels:FinderViewBase />
     </Design.DataContext>
 
-    <Grid Name="FileGrid" RowDefinitions="Auto,Auto,Auto,*">
+    <Grid Name="FileGrid" RowDefinitions="Auto,Auto,*">
 
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*">
             <Button Grid.Column="0" Command="{Binding GoToLastCommand}">
@@ -30,17 +30,9 @@
             <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
             <TextBlock Grid.Column="3">Length</TextBlock>
         </Grid>
-
-        <!-- add view -->
-        <Grid Grid.Row="2" IsVisible="False" ColumnDefinitions="Auto,*,*,*,*">
-            <Image Height="15" Grid.Column="0"
-                   Source="{Binding AddImagePath,
-                                   Converter={StaticResource Converter}}" />
-            <TextBox Grid.Column="1" Text="{Binding AddName}" />
-        </Grid>
-
+        
         <!-- file view -->
-        <ListBox Grid.Row="3"
+        <ListBox Grid.Row="2"
                  SelectedItem="{Binding SelectedItem}"
                  Items="{Binding Files}">
             <ListBox.ItemTemplate>
@@ -108,12 +100,14 @@
                         </MenuItem.Header>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Click="AddDirectoryClick">
+                    <MenuItem Command="{Binding $parent[views:Manager].AddFolder}" 
+                              CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add Directory" />
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Click="AddFileClick">
+                    <MenuItem Command="{Binding $parent[views:Manager].AddFile}" 
+                              CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add File" />
                         </MenuItem.Header>

@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
 using DynamicData;
-using FileManager.Lib;
 using LuckyFish.FileManager.Models;
 using ReactiveUI;
 using Path = System.IO.Path;
@@ -14,19 +13,7 @@ public class FinderViewBase : ViewModelBase
 {
     
     #region Pror
-
-    private string? _addImagePath;
-    public string? AddImagePath
-    {
-        get => _addImagePath;
-        set => SetField(ref _addImagePath, value);
-    }
-    private string? _addName;
-    public string? AddName
-    {
-        get => _addName;
-        set => SetField(ref _addName, value);
-    }
+    
     private string? Last { get; set; }
     private ValueTuple<string, string> Mark { get; set; }
 
@@ -57,6 +44,13 @@ public class FinderViewBase : ViewModelBase
     #endregion
 
     #region Command
+
+    private ReactiveCommand<IFileSystem, Unit>? _openCommand;
+    public ReactiveCommand<IFileSystem,Unit>? OpenCommand
+    {
+        get => _openCommand;
+        set => SetField(ref _openCommand, value);
+    }
 
     private ReactiveCommand<string, Unit>? _fileOperationCommand;
     public  ReactiveCommand<string,Unit>? FileOperationCommand
@@ -90,15 +84,15 @@ public class FinderViewBase : ViewModelBase
 
     #region Function
 
-    private void Init()
+    public void Init()
     {
         if(string.IsNullOrEmpty(FilePath))return;
         Files.Clear();
-        var a = new DirectoryOperation(FilePath);
-        Files.Add(a.GetFileSystems());
+        var operation = new DirectoryOperation(FilePath);
+        Files.Add(operation.GetFileSystems());
     }
-    
-    public void FileOperation(string? opera)
+
+    private void FileOperation(string? opera)
     {
         if(string.IsNullOrEmpty(opera) ||
            string.IsNullOrEmpty(FilePath))return;
@@ -149,7 +143,10 @@ public class FinderViewBase : ViewModelBase
     private void OpenTerminal()
     {
         if(string.IsNullOrEmpty(FilePath))return;
-        Process.Start(new ProcessStartInfo(OSInfo.TerminalPath,$"cd {FilePath}"));
+        var cmd = new Process();
+        cmd.StartInfo.FileName = @"cmd.exe";
+        cmd.StartInfo.Arguments = $"/K cd {FilePath}";
+        cmd.Start();
     }
 
     #endregion
@@ -160,6 +157,7 @@ public class FinderViewBase : ViewModelBase
         GoToParentCommand = ReactiveCommand.Create(GoToParent);
         GoToLastCommand = ReactiveCommand.Create(GoToLast);
         OpenTerminalCommand = ReactiveCommand.Create(OpenTerminal);
+        OpenCommand = ReactiveCommand.Create((IFileSystem a) => Open(a));
     }
 }
 

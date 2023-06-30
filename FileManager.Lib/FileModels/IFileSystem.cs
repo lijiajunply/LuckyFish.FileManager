@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LuckyFish.FileManager.Models;
+﻿namespace FileManager.Lib.FileModels;
 
 public interface IFileSystem
 {

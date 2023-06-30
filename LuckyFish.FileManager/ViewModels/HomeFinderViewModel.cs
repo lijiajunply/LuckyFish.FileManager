@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 
 namespace LuckyFish.FileManager.ViewModels;

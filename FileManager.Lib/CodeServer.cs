@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using LuckyFish.FileManager.Models;
-
-namespace LuckyFish.FileManager.Serves;
+﻿namespace FileManager.Lib;
 
 public static class CodeServer
 {

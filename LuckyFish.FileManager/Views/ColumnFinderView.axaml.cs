@@ -3,6 +3,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FileManager.Lib;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.ViewModels;
 

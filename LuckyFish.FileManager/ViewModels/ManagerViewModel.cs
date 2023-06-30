@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using DynamicData;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.Serves;
 

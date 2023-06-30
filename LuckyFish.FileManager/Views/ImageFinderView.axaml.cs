@@ -6,6 +6,7 @@ using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using FileManager.Lib;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.ViewModels;
 

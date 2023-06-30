@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.ViewModels;
 

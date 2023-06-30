@@ -1,7 +1,4 @@
-﻿using System.IO;
-using LuckyFish.FileManager.Serves;
-
-namespace LuckyFish.FileManager.Models;
+﻿namespace FileManager.Lib.FileModels;
 
 public class DriveSimpleOperation
 {

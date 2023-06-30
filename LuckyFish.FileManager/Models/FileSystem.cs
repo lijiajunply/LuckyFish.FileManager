@@ -1,4 +1,6 @@
-﻿namespace LuckyFish.FileManager.Models;
+﻿using FileManager.Lib.FileModels;
+
+namespace LuckyFish.FileManager.Models;
 
 public class FileSystem : IFileSystem
 {

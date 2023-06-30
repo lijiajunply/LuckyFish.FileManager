@@ -1,9 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using LuckyFish.FileManager.Serves;
+﻿using System.Globalization;
 
-namespace LuckyFish.FileManager.Models;
+namespace FileManager.Lib.FileModels;
 
 public class FileOperation : IFileSystem
 {

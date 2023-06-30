@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
 using DynamicData;
+using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
 using ReactiveUI;
 using Path = System.IO.Path;

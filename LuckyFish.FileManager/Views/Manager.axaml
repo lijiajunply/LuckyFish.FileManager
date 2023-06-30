@@ -24,7 +24,7 @@
             <!-- left pass (common and drive) -->
             <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
                 <ListBox Grid.Row="0" Items="{Binding Common}">
-                    <ListBox.ItemTemplate>
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
                                 <Svg Height="15" Width="15"
@@ -38,13 +38,13 @@
                                 </Grid.ContextFlyout>
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ListBox>
 
                 <SplitView Grid.Row="1" />
 
                 <ListBox Grid.Row="2" Items="{Binding Root}">
-                    <ListBox.ItemTemplate>
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Tapped="RootItemTapped"
                                   ColumnDefinitions="Auto,Auto"
@@ -62,7 +62,7 @@
                                              Maximum="{Binding TotalSize}" />
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ListBox>
             </Grid>
 

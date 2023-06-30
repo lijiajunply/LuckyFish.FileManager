@@ -30,7 +30,7 @@
             </Button>
             <TextBox Grid.Column="2" KeyDown="TextKeyDown" Text="{Binding FilePath,Mode=OneWay}" />
         </Grid>
-        
+
         <!-- file view -->
         <ListBox Grid.Row="1"
                  SelectedItem="{Binding SelectedItem}"
@@ -107,13 +107,13 @@
                         </MenuItem.Header>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Command="{Binding $parent[view:Manager].AddFolder}" 
+                    <MenuItem Command="{Binding $parent[view:Manager].AddFolder}"
                               CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add Directory" />
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Command="{Binding $parent[view:Manager].AddFile}" 
+                    <MenuItem Command="{Binding $parent[view:Manager].AddFile}"
                               CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add File" />

@@ -12,6 +12,5 @@
     
     <Application.Styles>
         <FluentTheme Mode="Light"/>
-        <StyleInclude Source="avares://Aura.UI.FluentTheme/AuraUI.xaml"/>
     </Application.Styles>
 </Application>

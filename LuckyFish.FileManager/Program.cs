@@ -10,16 +10,8 @@ abstract class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        try
-        {
-            BuildAvaloniaApp()
-                .StartWithClassicDesktopLifetime(args);
-        }
-        catch (Exception e)
-        {
-            var a = new MessageBox(e.Message);
-            a.Show();
-        }
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
     }
 
 

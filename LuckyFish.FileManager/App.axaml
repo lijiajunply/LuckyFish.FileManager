@@ -3,14 +3,14 @@
              xmlns:local="using:LuckyFish.FileManager"
              x:Class="LuckyFish.FileManager.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
-    
+
     <Application.Resources>
-        <local:BitmapValueConverter x:Key="Converter"/>
+        <local:BitmapValueConverter x:Key="Converter" />
     </Application.Resources>
-    
+
     <Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Light" />
     </Application.Styles>
 </Application>

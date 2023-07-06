@@ -15,55 +15,61 @@
 
         <!-- menu -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Setting" Click="SettingClick"/>
-            <MenuItem Header="Home" Command="{Binding ToHome}"/>
+            <MenuItem Header="Setting" Click="SettingClick" />
+            <MenuItem Header="Home" Command="{Binding ToHome}" />
         </Menu>
         <!-- main -->
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
 
             <!-- left pass (common and drive) -->
             <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto">
-                <ListBox Grid.Row="0" Items="{Binding Common}">
+                <ItemsControl Grid.Row="0" ItemsSource="{Binding Common}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Tapped="CommonTapped" ColumnDefinitions="Auto,Auto">
-                                <Svg Height="15" Width="15"
-                                     Grid.Column="0"
-                                     Path="{Binding ImagePath}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
-                                <Grid.ContextFlyout>
-                                    <Flyout>
-                                        <TextBlock Tapped="RemoveCommonTapped" Text="RemoveCommon" />
-                                    </Flyout>
-                                </Grid.ContextFlyout>
-                            </Grid>
+                            <Button Click="CommonTapped">
+                                <Grid ColumnDefinitions="Auto,Auto">
+                                    <Svg Height="15" Width="15"
+                                         Grid.Column="0"
+                                         Path="{Binding ImagePath}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                    <Grid.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Click="RemoveCommonTapped">
+                                                <TextBlock Text="RemoveCommon" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
+                                </Grid>
+                            </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListBox>
+                </ItemsControl>
 
                 <SplitView Grid.Row="1" />
 
-                <ListBox Grid.Row="2" Items="{Binding Root}">
+                <ItemsControl Grid.Row="2" ItemsSource="{Binding Root}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Tapped="RootItemTapped"
-                                  ColumnDefinitions="Auto,Auto"
-                                  RowDefinitions="Auto,Auto">
-                                <Svg Grid.Row="0"
-                                     Grid.RowSpan="2"
-                                     Height="15" Width="15"
-                                     Grid.Column="0"
-                                     Path="{Binding ImagePath}"/>
-                                <TextBlock Grid.Row="0"
-                                           Grid.Column="1"
-                                           Text="{Binding Name}" />
-                                <ProgressBar Grid.Column="1" Grid.Row="1"
-                                             Value="{Binding Size}"
-                                             Maximum="{Binding TotalSize}" />
-                            </Grid>
+                            <Button Click="RootItemTapped">
+                                <Grid ColumnDefinitions="Auto,Auto"
+                                      RowDefinitions="Auto,Auto">
+                                    <Svg Grid.Row="0"
+                                         Grid.RowSpan="2"
+                                         Height="15" Width="15"
+                                         Grid.Column="0"
+                                         Path="{Binding ImagePath}" />
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="1"
+                                               Text="{Binding Name}" />
+                                    <ProgressBar Grid.Column="1" Grid.Row="1"
+                                                 Value="{Binding Size}"
+                                                 Maximum="{Binding TotalSize}" />
+                                </Grid>
+                            </Button>
+
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListBox>
+                </ItemsControl>
             </Grid>
 
             <!-- right pass (finder) -->

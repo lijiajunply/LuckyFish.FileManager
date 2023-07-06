@@ -19,7 +19,7 @@
 
     <Grid RowDefinitions="Auto,Auto">
 
-        <ItemsControl Grid.Row="0" Items="{Binding Commons}">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Commons}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -27,8 +27,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}"
-                            CommandParameter="{Binding Path}">
+                    <Button Click="CommonClick">
                         <Border CornerRadius="10" ClipToBounds="True">
                             <StackPanel Spacing="5" Width="100">
                                 <Svg Height="50" Path="{Binding ImagePath}" />
@@ -40,7 +39,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ItemsControl Grid.Row="1" Items="{Binding Drives}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Drives}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -49,8 +48,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border CornerRadius="10" ClipToBounds="True">
-                        <Button Command="{Binding $parent[views:Manager].DataContext.FilePath}"
-                                CommandParameter="{Binding Name}">
+                        <Button Click="DriveClick">
                             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
                                 <Svg Height="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
                                      Path="{Binding ImagePath}" />

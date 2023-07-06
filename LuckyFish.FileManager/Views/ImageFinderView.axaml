@@ -34,7 +34,7 @@
         <!-- file view -->
         <ListBox Grid.Row="1"
                  SelectedItem="{Binding SelectedItem}"
-                 Items="{Binding Files}">
+                 ItemsSource="{Binding Files}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -43,59 +43,61 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Width="100" DoubleTapped="BorderDoubleTapped">
-                        <Border CornerRadius="10" ClipToBounds="True">
-                            <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}" />
-                        </Border>
-                        <TextBlock Text="{Binding Name}"
-                                   HorizontalAlignment="Center"
-                                   TextWrapping="WrapWithOverflow" />
-                        <StackPanel.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding $parent[view:Manager].More}"
-                                          CommandParameter="{Binding }">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="More.." />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem
-                                    Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Copy">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Copy" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Cut">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Cut" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Click="RenameClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Rename" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Delete">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Delete" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="AddCommon">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Add Common" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </ContextMenu>
-                        </StackPanel.ContextMenu>
-                    </StackPanel>
+                    <Button Click="BorderDoubleTapped">
+                        <StackPanel Width="100">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Svg Width="100" Stretch="Uniform" Path="{Binding ImagePath}" />
+                            </Border>
+                            <TextBlock Text="{Binding Name}"
+                                       HorizontalAlignment="Center"
+                                       TextWrapping="WrapWithOverflow" />
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding $parent[view:Manager].More}"
+                                              CommandParameter="{Binding }">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="More.." />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem
+                                        Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Copy">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Copy" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Cut">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Cut" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Click="RenameClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Rename" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Delete">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Delete" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[view:ImageFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="AddCommon">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Add Common" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
+                        </StackPanel>
+                    </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 

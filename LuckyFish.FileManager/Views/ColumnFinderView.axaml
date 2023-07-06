@@ -30,65 +30,68 @@
             <TextBlock Grid.Column="2">LastWriteTime</TextBlock>
             <TextBlock Grid.Column="3">Length</TextBlock>
         </Grid>
-        
+
         <!-- file view -->
         <ListBox Grid.Row="2"
                  SelectedItem="{Binding SelectedItem}"
-                 Items="{Binding Files}">
+                 ItemsSource="{Binding Files}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid DoubleTapped="GridDoubleTapped"
-                          ColumnDefinitions="Auto,*,*,*,*">
-                        <Grid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding $parent[views:Manager].More}" CommandParameter="{Binding }">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="More.." />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem
-                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Copy">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Copy" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Cut">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Cut" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Click="RenameClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Rename" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="Delete">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Delete" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem
-                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                    CommandParameter="AddCommon">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="Add Common" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Grid.ContextMenu>
-                        <Svg Height="15" Grid.Column="0" Path="{Binding ImagePath}" />
-                        <TextBlock Grid.Column="1" Text="{Binding  Name}" />
-                        <TextBlock Grid.Column="2" Text="{Binding Extension}" />
-                        <TextBlock Grid.Column="3" Text="{Binding WriteTime}" />
-                        <TextBlock Grid.Column="4" Text="{Binding Size}" />
-                    </Grid>
+                    <Button Click="GridDoubleTapped">
+                        <Grid ColumnDefinitions="Auto,*,*,*,*">
+                            <Grid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding $parent[views:Manager].More}"
+                                              CommandParameter="{Binding }">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="More.." />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem
+                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Copy">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Copy" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Cut">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Cut" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Click="RenameClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Rename" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="Delete">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Delete" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                        CommandParameter="AddCommon">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Add Common" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Svg Height="15" Grid.Column="0" Path="{Binding ImagePath}" />
+                            <TextBlock Grid.Column="1" Text="{Binding  Name}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Extension}" />
+                            <TextBlock Grid.Column="3" Text="{Binding WriteTime}" />
+                            <TextBlock Grid.Column="4" Text="{Binding Size}" />
+                        </Grid>
+                    </Button>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -100,13 +103,13 @@
                         </MenuItem.Header>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Command="{Binding $parent[views:Manager].AddFolder}" 
+                    <MenuItem Command="{Binding $parent[views:Manager].AddFolder}"
                               CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add Directory" />
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Command="{Binding $parent[views:Manager].AddFile}" 
+                    <MenuItem Command="{Binding $parent[views:Manager].AddFile}"
                               CommandParameter="{Binding FilePath}">
                         <MenuItem.Header>
                             <TextBlock Text="Add File" />

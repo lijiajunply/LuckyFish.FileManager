@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FileManager.Lib.FileModels;
 using LuckyFish.FileManager.Models;
+using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
 
@@ -39,5 +40,33 @@ public partial class HomeFinderView : UserControl
             i += 1;
         }
         return $"{size}{name[i]}";
+    }
+
+    private void CommonClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Control control) return;
+        if(control.DataContext is not CommonModel context)return;
+        var model = GetModel((Control)Parent!);
+        if(model == null)return;
+        model.FilePath(context.Path);
+    }
+
+    private ManagerViewModel? GetModel(Control control)
+    {
+        while (true)
+        {
+            if(control.DataContext is ManagerViewModel model) return model;
+            if (control.Parent == null) return null;
+            control = (Control)control.Parent;
+        }
+    }
+
+    private void DriveClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Control control) return;
+        if(control.DataContext is not DriveSimpleOperation context)return;
+        var model = GetModel((Control)Parent!);
+        if(model == null)return;
+        model.FilePath(context.Name);
     }
 }

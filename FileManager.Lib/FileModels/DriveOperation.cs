@@ -2,7 +2,6 @@
 
 public class DriveOperation : IFileSystem
 {
-    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
@@ -24,7 +23,6 @@ public class DriveOperation : IFileSystem
         TotalSize = info.TotalSize;
         DriveType = info.DriveType.ToString();
         Extension = "";
-        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "drive.svg");
     }
     public void Rename(string newName){}
 

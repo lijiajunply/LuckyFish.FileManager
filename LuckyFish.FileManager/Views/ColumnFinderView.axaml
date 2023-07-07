@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
              xmlns:views="clr-namespace:LuckyFish.FileManager.Views"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:FinderViewBase"
              x:Class="LuckyFish.FileManager.Views.ColumnFinderView">
@@ -35,63 +36,74 @@
         <ListBox Grid.Row="2"
                  SelectedItem="{Binding SelectedItem}"
                  ItemsSource="{Binding Files}">
+            <!-- <ListBox.Styles> -->
+            <!-- Give the ListBoxItems a fixed with of 100 and right-align them -->
+            <!-- <Style Selector="ListBoxItem"> -->
+            <!--     <Setter Property="Width" Value="1000"/> -->
+            <!--     <Setter Property="HorizontalAlignment" Value="Left"/> -->
+            <!-- </Style> -->
+            <!-- </ListBox.Styles> -->
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Click="GridDoubleTapped">
-                        <Grid ColumnDefinitions="Auto,*,*,*,*">
-                            <Grid.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Command="{Binding $parent[views:Manager].More}"
-                                              CommandParameter="{Binding }">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="More.." />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                    <Separator />
-                                    <MenuItem
-                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                        CommandParameter="Copy">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="Copy" />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                    <MenuItem
-                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                        CommandParameter="Cut">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="Cut" />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                    <Separator />
-                                    <MenuItem Click="RenameClick">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="Rename" />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                    <MenuItem
-                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                        CommandParameter="Delete">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="Delete" />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                    <MenuItem
-                                        Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
-                                        CommandParameter="AddCommon">
-                                        <MenuItem.Header>
-                                            <TextBlock Text="Add Common" />
-                                        </MenuItem.Header>
-                                    </MenuItem>
-                                </ContextMenu>
-                            </Grid.ContextMenu>
-                            <Svg Height="15" Grid.Column="0" Path="{Binding ImagePath}" />
+                    <Button Background="Transparent" 
+                            BorderBrush="Transparent"
+                            HorizontalAlignment="Left"
+                            Click="GridDoubleTapped">
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding $parent[views:Manager].More}"
+                                          CommandParameter="{Binding }">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="More.." />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Copy">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Copy" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Cut">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Cut" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Click="RenameClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Rename" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="Delete">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Delete" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem
+                                    Command="{Binding $parent[views:ColumnFinderView].DataContext.FileOperationCommand}"
+                                    CommandParameter="AddCommon">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Add Common" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        <Grid Width="700" ColumnDefinitions="Auto,*,*,*,*">
+                            <avalonia:MaterialIcon
+                                Height="15" Grid.Column="0"
+                                Kind="{Binding .,Converter={StaticResource IconConverter}}" />
                             <TextBlock Grid.Column="1" Text="{Binding  Name}" />
                             <TextBlock Grid.Column="2" Text="{Binding Extension}" />
                             <TextBlock Grid.Column="3" Text="{Binding WriteTime}" />
-                            <TextBlock Grid.Column="4" Text="{Binding Size}" />
+                            <TextBlock Grid.Column="4" Text="{Binding Size,Converter={StaticResource SizeStringConverter}}" />
                         </Grid>
                     </Button>
-
                 </DataTemplate>
             </ListBox.ItemTemplate>
 

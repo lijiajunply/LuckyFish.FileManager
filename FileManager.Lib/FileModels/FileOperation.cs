@@ -4,7 +4,6 @@ namespace FileManager.Lib.FileModels;
 
 public class FileOperation : IFileSystem
 {
-    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
@@ -23,7 +22,6 @@ public class FileOperation : IFileSystem
         Size = info.Length;
         Extension = info.Extension;
         Name = info.Name;
-        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "file.svg");
     }
 
     public void Rename(string newName)

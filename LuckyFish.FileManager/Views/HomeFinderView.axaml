@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
-             xmlns:views="clr-namespace:LuckyFish.FileManager.Views"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LuckyFish.FileManager.Views.HomeFinderView">
     <Design.DataContext>
@@ -30,7 +30,7 @@
                     <Button Click="CommonClick">
                         <Border CornerRadius="10" ClipToBounds="True">
                             <StackPanel Spacing="5" Width="100">
-                                <Svg Height="50" Path="{Binding ImagePath}" />
+                                <avalonia:MaterialIcon Height="50" Width="50" Kind="{Binding .,Converter={StaticResource IconConverter}}"/>
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" />
                             </StackPanel>
                         </Border>
@@ -50,8 +50,7 @@
                     <Border CornerRadius="10" ClipToBounds="True">
                         <Button Click="DriveClick">
                             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
-                                <Svg Height="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
-                                     Path="{Binding ImagePath}" />
+                                <avalonia:MaterialIcon Height="50" Width="50" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Kind="DriveDocument"/>
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
                                 <ProgressBar Grid.Row="1" Grid.Column="1" Value="{Binding Size}"
                                              Maximum="{Binding TotalSize}" />

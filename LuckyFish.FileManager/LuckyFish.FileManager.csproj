@@ -25,7 +25,11 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
         <PackageReference Include="Avalonia.Svg" Version="11.0.0" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Semi.Avalonia" Version="11.0.0" />
+        <PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.0.0" />
+        <PackageReference Include="Semi.Avalonia.DataGrid" Version="11.0.0" />
     </ItemGroup>
 
     <ItemGroup>

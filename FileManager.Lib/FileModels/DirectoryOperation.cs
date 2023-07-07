@@ -4,7 +4,6 @@ namespace FileManager.Lib.FileModels;
 
 public class DirectoryOperation : IFileSystem
 {
-    public string? ImagePath { get; set; }
     public string Name { get; set; }
     public string Path { get; set; }
     public string Extension { get; set; }
@@ -23,7 +22,6 @@ public class DirectoryOperation : IFileSystem
         CreateTime = info.CreationTime.ToString(CultureInfo.CurrentCulture);
         WriteTime = info.LastWriteTime.ToString(CultureInfo.CurrentCulture);
         Size = isRunGetSize ? GetSize() : 0;
-        ImagePath = System.IO.Path.Combine(CodeServer.CodePath, "Assets", "dir.svg");
     }
 
     public IFileSystem[] GetFileSystems(bool isHide = false)

@@ -1,16 +1,24 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:LuckyFish.FileManager"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:converters="clr-namespace:LuckyFish.FileManager.Converters"
              x:Class="LuckyFish.FileManager.App">
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Resources>
-        <local:BitmapValueConverter x:Key="Converter" />
+        <converters:BitmapValueConverter x:Key="Converter" />
+        <converters:IconConverter x:Key="IconConverter"/>
+        <converters:SizeStringConverter x:Key="SizeStringConverter"/>
     </Application.Resources>
 
     <Application.Styles>
         <FluentTheme/>
+        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
+        <StyleInclude Source="avares://Semi.Avalonia.DataGrid/Index.axaml" />
+        <StyleInclude Source="avares://Semi.Avalonia.ColorPicker/Index.axaml" />
+        <avalonia:MaterialIconStyles />
     </Application.Styles>
 </Application>

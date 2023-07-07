@@ -3,7 +3,7 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 
-namespace LuckyFish.FileManager;
+namespace LuckyFish.FileManager.Converters;
 
 
 public class BitmapValueConverter : IValueConverter

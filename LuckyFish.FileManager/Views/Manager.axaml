@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Icon="/Assets/avalonia-logo.ico"
         xmlns:viewModels="clr-namespace:LuckyFish.FileManager.ViewModels"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="LuckyFish.FileManager.Views.Manager">
 
@@ -28,9 +29,11 @@
                         <DataTemplate>
                             <Button Click="CommonTapped">
                                 <Grid ColumnDefinitions="Auto,Auto">
-                                    <Svg Height="15" Width="15"
+                                    <avalonia:MaterialIcon
                                          Grid.Column="0"
-                                         Path="{Binding ImagePath}" />
+                                         Height="15" 
+                                         Width="15"
+                                         Kind="{Binding .,Converter={StaticResource IconConverter}}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Name}" />
                                     <Grid.ContextMenu>
                                         <ContextMenu>
@@ -53,11 +56,12 @@
                             <Button Click="RootItemTapped">
                                 <Grid ColumnDefinitions="Auto,Auto"
                                       RowDefinitions="Auto,Auto">
-                                    <Svg Grid.Row="0"
-                                         Grid.RowSpan="2"
-                                         Height="15" Width="15"
-                                         Grid.Column="0"
-                                         Path="{Binding ImagePath}" />
+                                    <avalonia:MaterialIcon 
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Height="15" Width="15"
+                                        Grid.Column="0"
+                                        Kind="DriveDocument"/>
                                     <TextBlock Grid.Row="0"
                                                Grid.Column="1"
                                                Text="{Binding Name}" />

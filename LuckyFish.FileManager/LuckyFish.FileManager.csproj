@@ -30,6 +30,7 @@
         <PackageReference Include="Semi.Avalonia" Version="11.0.0" />
         <PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.0.0" />
         <PackageReference Include="Semi.Avalonia.DataGrid" Version="11.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     </ItemGroup>
 
     <ItemGroup>

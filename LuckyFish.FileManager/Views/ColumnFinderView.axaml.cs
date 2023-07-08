@@ -4,7 +4,6 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FileManager.Lib;
 using FileManager.Lib.FileModels;
-using LuckyFish.FileManager.Models;
 using LuckyFish.FileManager.ViewModels;
 
 namespace LuckyFish.FileManager.Views;
@@ -21,10 +20,10 @@ public partial class ColumnFinderView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
     
-    private void GridDoubleTapped(object? sender, RoutedEventArgs e)
+    private void SelectedTapped(object? sender, RoutedEventArgs e)
     {
         var model = DataContext as FinderViewBase;
-        var context = (sender as Grid)!.DataContext as IFileSystem;
+        var context = (sender as Control)!.DataContext as IFileSystem;
         if(model == null || context == null)return;
         model.Open(context);
     }
@@ -39,7 +38,7 @@ public partial class ColumnFinderView : UserControl
     }
 
 
-    #region ItemFlyoutOperation
+    #region ItemOperation
     
     private void RenameClick(object? sender, RoutedEventArgs e)
     {
@@ -70,18 +69,22 @@ public partial class ColumnFinderView : UserControl
 
     #endregion
 
-    #region ListFlyoutOperation
-
-    private void AddFileClick(object? sender, RoutedEventArgs e)
+    private void MoreClick(object? sender, RoutedEventArgs e)
     {
-        
+        if(sender is not Control control)return;
+        if(control.DataContext is not IFileSystem fileSystem)return;
+        var model = FindMain((Control)Parent!);
+        if(model == null)return;
+        model.More(fileSystem);
     }
 
-    private void AddDirectoryClick(object? sender, RoutedEventArgs e)
+    private Manager? FindMain(Control control)
     {
-        
+        while (true)
+        {
+            if (control is Manager manager) return manager;
+            if (control.Parent == null) return null;
+            control = (Control)control.Parent;
+        }
     }
-
-    #endregion
-
 }

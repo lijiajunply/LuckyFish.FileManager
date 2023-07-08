@@ -41,7 +41,7 @@ public partial class Manager : Window
 
     #endregion
 
-    public static void More(IFileSystem system)
+    public void More(IFileSystem system)
     {
         var a = new DetailView
         {

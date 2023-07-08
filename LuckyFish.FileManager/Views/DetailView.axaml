@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:LuckyFish.FileManager.Models"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
         Icon="/Assets/avalonia-logo.ico"
         Height="350"
@@ -15,7 +16,10 @@
     <StackPanel>
         <Grid ColumnDefinitions="*,*">
             <Border Grid.Column="0" CornerRadius="10" ClipToBounds="True">
-                <Svg Width="80" Stretch="Uniform" Path="{Binding ImagePath}"/>
+                <avalonia:MaterialIcon
+                    Height="100"
+                    Width="100"
+                    Kind="{Binding .,Converter={StaticResource IconConverter}}" />
             </Border>
             <Grid Grid.Column="1" RowDefinitions="*,*">
                 <TextBox HorizontalAlignment="Center" Grid.Row="0" Text="{Binding Name,Mode=OneTime}"/>
@@ -28,7 +32,7 @@
         </Grid>
         <Grid ColumnDefinitions="*,Auto,*,*">
             <TextBlock Grid.Column="0" Text="大小:"/>
-            <TextBlock Grid.Column="1" Text="{Binding Size}"/>
+            <TextBlock Grid.Column="1" Text="{Binding Size,Converter={StaticResource SizeStringConverter}}"/>
         </Grid>
         <Grid ColumnDefinitions="*,Auto,*,*">
             <TextBlock Grid.Column="0" Text="创建时间:"/>

@@ -36,23 +36,16 @@
         <ListBox Grid.Row="2"
                  SelectedItem="{Binding SelectedItem}"
                  ItemsSource="{Binding Files}">
-            <!-- <ListBox.Styles> -->
-            <!-- Give the ListBoxItems a fixed with of 100 and right-align them -->
-            <!-- <Style Selector="ListBoxItem"> -->
-            <!--     <Setter Property="Width" Value="1000"/> -->
-            <!--     <Setter Property="HorizontalAlignment" Value="Left"/> -->
-            <!-- </Style> -->
-            <!-- </ListBox.Styles> -->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Button Background="Transparent" 
                             BorderBrush="Transparent"
-                            HorizontalAlignment="Left"
-                            Click="GridDoubleTapped">
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Click="SelectedTapped">
                         <Button.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="{Binding $parent[views:Manager].More}"
-                                          CommandParameter="{Binding }">
+                                <MenuItem Click="MoreClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="More.." />
                                     </MenuItem.Header>
@@ -94,7 +87,7 @@
                                 </MenuItem>
                             </ContextMenu>
                         </Button.ContextMenu>
-                        <Grid Width="700" ColumnDefinitions="Auto,*,*,*,*">
+                        <Grid ColumnDefinitions="Auto,*,*,*,*">
                             <avalonia:MaterialIcon
                                 Height="15" Grid.Column="0"
                                 Kind="{Binding .,Converter={StaticResource IconConverter}}" />
